@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tạo AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
+  
   <style>
-    /* ... (Toàn bộ phần CSS <style> của bạn vẫn giữ nguyên y hệt) ... */
+    /* CSS CỤ THỂ CHO TRANG NÀY (Phong cách Dust!Sans) */
     body {
       background-color: #0b0a10;
       color: #f0e6ff;
       font-family: 'Courier New', monospace;
-      margin: 0;
-      padding: 0;
     }
 
     header {
@@ -26,8 +25,9 @@
       color: #ff004c;
       text-shadow: 0 0 10px #ff004c;
       font-size: 1.8em;
-      margin: 0;
     }
+
+    /* CSS cho Nav đã được chuyển vào style.css */
 
     main {
       max-width: 800px;
@@ -111,22 +111,27 @@
     <h1>Tạo AU Mới</h1>
   </header>
 
+  <nav>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="aus.html">Danh sách AU</a></li>
+        <li><a href="characters.html">Nhân vật</a></li>
+        <li><a href="create-aus.html" class="active">Tạo AU Mới</a></li>
+    </ul>
+  </nav>
+
   <main>
     <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
 
     <form id="create-au">
       <label for="name">Tên AU</label>
       <input type="text" id="name" placeholder="Nhập tên AU của bạn" required>
-
       <label for="creator">Tác giả</label>
       <input type="text" id="creator" placeholder="Tên người tạo AU" required>
-
       <label for="summary">Mô tả ngắn</label>
       <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
-
       <label for="link">Liên kết (nếu có)</label>
       <input type="url" id="link" placeholder="Ví dụ: https://...">
-
       <button type="submit" id="submit-button">Gửi AU</button>
     </form>
   </main>
@@ -136,49 +141,37 @@
   </footer>
 
   <script>
+    // ... (Script của bạn giữ nguyên) ...
     const form = document.getElementById('create-au');
     const submitButton = document.getElementById('submit-button');
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault(); 
       submitButton.disabled = true;
       submitButton.textContent = 'Đang gửi...';
-
-      // --- ĐÂY LÀ THAY ĐỔI QUAN TRỌNG ---
-      // 1. Địa chỉ Backend (Trỏ đến máy chủ Render)
       const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
-
-      // 2. Lấy dữ liệu từ form
       const data = {
         name: document.getElementById('name').value,
         author: document.getElementById('creator').value, 
         desc: document.getElementById('summary').value,   
         link: document.getElementById('link').value
       };
-
-      // 3. Gửi yêu cầu bằng fetch()
       try {
         const response = await fetch(BACKEND_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(data)
         });
-
         if (response.ok) {
           const result = await response.json();
-          alert(result.message); // "Đã lưu AU thành công!"
+          alert(result.message);
           form.reset();
         } else {
           const errorResult = await response.json();
           alert('Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.'));
         }
-
       } catch (error) {
         console.error('Lỗi khi gửi fetch:', error);
         alert('Gửi thất bại: Failed to fetch. Vui lòng kiểm tra lại. (Lưu ý: server miễn phí có thể mất 50 giây để khởi động.)');
-      
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Gửi AU';
