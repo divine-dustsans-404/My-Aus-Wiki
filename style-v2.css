@@ -1,0 +1,103 @@
+/* --- Cài đặt chung cho toàn trang --- */
+body {
+    background-color: #1a1a1a; /* Màu nền tối */
+    color: #e0e0e0;           /* Màu chữ sáng (gần trắng) */
+    font-family: Arial, sans-serif; /* Phông chữ dễ đọc */
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 1. Tiêu đề Wiki --- */
+header {
+    background-color: #0d0d0d; /* Nền đen tuyền cho tiêu đề */
+    padding: 15px;
+    text-align: center;
+    border-bottom: 3px solid #444;
+}
+
+header h1 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2em; /* 2em = gấp 2 lần cỡ chữ bình thường */
+}
+
+/* --- 2. Thanh điều hướng --- */
+nav {
+    background-color: #333333; /* Nền xám tối cho menu */
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none; /* Bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block; /* Hiển thị các mục menu trên cùng một hàng */
+    margin: 0 20px;
+}
+
+nav a {
+    color: #ffffff; /* Màu chữ trắng */
+    text-decoration: none; /* Bỏ gạch chân */
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Thêm hiệu ứng khi di chuột qua link */
+nav a:hover {
+    color: #ffff00; /* Đổi màu vàng (màu đặc trưng của Undertale) */
+}
+
+/* --- 3. Khu vực nội dung chính --- */
+main {
+    /* Đặt chiều rộng tối đa và căn giữa nội dung */
+    max-width: 900px;
+    margin: 20px auto; /* 20px lề trên/dưới, auto căn lề trái/phải (căn giữa) */
+    padding: 25px;
+    background-color: #2a2a2a; /* Nền xám đậm hơn cho nội dung */
+    border-radius: 8px; /* Bo góc */
+}
+
+article h2 {
+    color: #ffff00; /* Tiêu đề bài viết màu vàng */
+    border-bottom: 2px solid #555;
+    padding-bottom: 5px;
+}
+
+article h3 {
+    color: #f0f0f0;
+}
+
+/* Định dạng cho hình ảnh */
+.page-image {
+    max-width: 100%; /* Đảm bảo ảnh không bị tràn ra ngoài */
+    height: auto;
+    display: block; /* Giúp căn giữa ảnh dễ dàng */
+    margin: 15px auto; /* Căn giữa ảnh */
+    border: 3px solid #444;
+    border-radius: 5px;
+}
+
+/* Định dạng các liên kết trong nội dung */
+article a {
+    color: #4a90e2; /* Màu xanh cho liên kết */
+    text-decoration: none;
+}
+
+article a:hover {
+    text-decoration: underline; /* Thêm gạch chân khi di chuột */
+}
+
+/* --- Chân trang --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #0d0d0d;
+    color: #777;
+    font-size: 0.9em;
+    border-top: 1px solid #333;
+}
