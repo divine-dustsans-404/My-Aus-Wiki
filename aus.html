@@ -6,8 +6,7 @@
   <title>Danh sách AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* STYLE CHUNG (Lấy từ các trang khác của bạn để nhất quán)
-    */
+    /* ... (Toàn bộ CSS của bạn vẫn giữ nguyên y hệt) ... */
     body {
       background-color: #0b0a10;
       color: #f0e6ff;
@@ -29,193 +28,43 @@
       font-size: 1.8em;
       margin: 0;
     }
+    
+    /* --- BẮT ĐẦU CSS CHO NAV (Lấy từ style.css) --- */
+    nav {
+        background-color: #333333; 
+        padding: 10px 0;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 20px;
+    }
+
+    nav a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    /* Đặt class 'active' (màu vàng) cho mục hiện tại */
+    nav a.active, nav a:hover {
+        color: #ffff00;
+    }
+    /* --- KẾT THÚC CSS CHO NAV --- */
 
     main {
-      max-width: 900px; /* Rộng hơn một chút để chứa các thẻ */
+      max-width: 900px;
       margin: 40px auto;
       padding: 25px;
     }
 
     footer {
-      text-align: center;
-      border-top: 1px solid #331a3a;
-      padding: 15px;
-      color: #777;
-      font-size: 0.9em;
-      margin-top: 40px;
-    }
-    
-    /* STYLE MỚI CHO TRANG DANH SÁCH NÀY
-    */
-    
-    /* Vùng chứa danh sách */
-    #au-list-container {
-      display: grid;
-      /* Tự động tạo các cột rộng tối thiểu 280px */
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px; /* Khoảng cách giữa các thẻ */
-    }
-
-    /* Thẻ hiển thị thông tin AU */
-    .au-card {
-      background: #111;
-      border: 2px solid #b30059;
-      box-shadow: 0 0 25px rgba(178, 0, 90, 0.4);
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .au-card:hover {
-      transform: translateY(-5px); /* Nhấc thẻ lên khi di chuột */
-      box-shadow: 0 0 35px rgba(255, 0, 120, 0.8);
-    }
-
-    .au-card h2 {
-      color: #ff3366;
-      font-size: 1.5em;
-      margin-top: 0;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #331a3a;
-      padding-bottom: 10px;
-    }
-    
-    .au-card .author {
-      color: #b36eff; /* Màu tím */
-      font-size: 0.9em;
-      margin-bottom: 15px;
-    }
-
-    .au-card .description {
-      color: #f0e6ff;
-      font-size: 1em;
-      line-height: 1.5;
-      flex-grow: 1; /* Đẩy phần link xuống dưới cùng */
-      margin-bottom: 20px;
-    }
-
-    .au-card .link-button {
-      background: #b30059;
-      border: none;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      text-decoration: none;
-      text-align: center;
-      transition: 0.2s;
-    }
-
-    .au-card .link-button:hover {
-      background: #ff004c;
-      box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
-    }
-    
-    .au-card .link-button.disabled {
-      background: #333;
-      color: #777;
-      cursor: not-allowed;
-    }
-
-    /* Thông báo tải */
-    #loading-message {
-      color: #b36eff;
-      font-size: 1.2em;
-      text-align: center;
-    }
-
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>Danh sách AU</h1>
-  </header>
-
-  <main>
-    <div id="au-list-container">
-      <p id="loading-message">Đang tải danh sách AU từ máy chủ...</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 My AUS Wiki | Undertale thuộc Toby Fox.</p>
-  </footer>
-
-  <script>
-    // Chạy mã khi trang đã tải xong
-    document.addEventListener('DOMContentLoaded', () => {
-      
-      const container = document.getElementById('au-list-container');
-      const loadingMessage = document.getElementById('loading-message');
-      
-      // Địa chỉ API backend của bạn
-      const API_URL = 'https://dust-aus-backend.onrender.com/aus';
-
-      // Hàm để lấy và hiển thị dữ liệu
-      async function fetchAndDisplayAUs() {
-        try {
-          // 1. Gọi API
-          const response = await fetch(API_URL);
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const aus = await response.json();
-
-          // 2. Xóa thông báo "Đang tải..."
-          loadingMessage.remove();
-
-          // 3. Kiểm tra xem có AU nào không
-          if (aus.length === 0) {
-            container.innerHTML = '<p id="loading-message">Chưa có AU nào được gửi. Hãy là người đầu tiên!</p>';
-            return;
-          }
-
-          // 4. Lặp qua từng AU và tạo thẻ HTML
-          aus.forEach(au => {
-            const card = document.createElement('article');
-            card.className = 'au-card';
-            
-            // Xử lý link: vô hiệu hóa nếu link là "Không có"
-            let linkHtml = '';
-            if (au.link && au.link !== 'Không có' && au.link.startsWith('http')) {
-              linkHtml = `<a href="${au.link}" class="link-button" target="_blank" rel="noopener noreferrer">Xem thêm</a>`;
-            } else {
-              linkHtml = `<a class="link-button disabled" aria-disabled="true">Không có link</a>`;
-            }
-
-            // Chuyển đổi ký tự xuống dòng (\n) trong mô tả thành thẻ <br>
-            const descriptionHtml = au.desc.replace(/\n/g, '<br>');
-
-            // Đổ HTML vào thẻ
-            card.innerHTML = `
-              <h2>${au.name}</h2>
-              <p class="author">Tác giả: ${au.author}</p>
-              <p class="description">${descriptionHtml}</p>
-              ${linkHtml}
-            `;
-            
-            // Thêm thẻ vào vùng chứa
-            container.appendChild(card);
-          });
-
-        } catch (error) {
-          // 5. Xử lý lỗi
-          console.error('Lỗi khi tải AU:', error);
-          loadingMessage.textContent = 'Lỗi: Không thể tải danh sách AU. Server có thể đang ngủ hoặc bị lỗi.';
-        }
-      }
-
-      // Gọi hàm
-      fetchAndDisplayAUs();
-    });
-  </script>
-
-</body>
-  </html>
-  
+      text-align: center
