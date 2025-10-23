@@ -6,7 +6,7 @@
   <title>Tạo AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Trang tạo AU — phối màu Dust!Sans */
+    /* ... (Toàn bộ phần CSS <style> của bạn vẫn giữ nguyên y hệt) ... */
     body {
       background-color: #0b0a10;
       color: #f0e6ff;
@@ -81,7 +81,6 @@
       transform: scale(1.05);
     }
     
-    /* Thêm CSS cho trạng thái "Đang gửi..." */
     button:disabled {
       background: #555;
       cursor: not-allowed;
@@ -140,23 +139,20 @@
     const form = document.getElementById('create-au');
     const submitButton = document.getElementById('submit-button');
 
-    // Chúng ta dùng 'async' để có thể sử dụng 'await' cho fetch
     form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Ngăn trang tải lại
-
-      // 0. Thay đổi nút để báo đang gửi
+      e.preventDefault(); 
       submitButton.disabled = true;
       submitButton.textContent = 'Đang gửi...';
 
-      // 1. Địa chỉ Backend (đã cập nhật lên Render)
+      // --- ĐÂY LÀ THAY ĐỔI QUAN TRỌNG ---
+      // 1. Địa chỉ Backend (Trỏ đến máy chủ Render)
       const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
 
-      // 2. Lấy dữ liệu từ form và ÁNH XẠ tên cho đúng
-      //    (Backend của bạn cần 'author' và 'desc')
+      // 2. Lấy dữ liệu từ form
       const data = {
         name: document.getElementById('name').value,
-        author: document.getElementById('creator').value, // Lấy từ id 'creator'
-        desc: document.getElementById('summary').value,   // Lấy từ id 'summary'
+        author: document.getElementById('creator').value, 
+        desc: document.getElementById('summary').value,   
         link: document.getElementById('link').value
       };
 
@@ -171,25 +167,19 @@
         });
 
         if (response.ok) {
-          // Nếu máy chủ trả về OK (status 201)
           const result = await response.json();
-          alert(result.message); // Hiển thị "Đã lưu AU thành công!"
-          form.reset(); // Xóa nội dung form
+          alert(result.message); // "Đã lưu AU thành công!"
+          form.reset();
         } else {
-          // Nếu máy chủ báo lỗi (ví dụ: thiếu dữ liệu, status 400)
           const errorResult = await response.json();
           alert('Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.'));
         }
 
       } catch (error) {
-        // Lỗi này bây giờ có thể có nghĩa là Render server đang "ngủ"
         console.error('Lỗi khi gửi fetch:', error);
-        
-        // Đây là lỗi gốc của bạn, giờ chúng ta thêm chú thích
         alert('Gửi thất bại: Failed to fetch. Vui lòng kiểm tra lại. (Lưu ý: server miễn phí có thể mất 50 giây để khởi động.)');
       
       } finally {
-        // 4. Bật lại nút dù thành công hay thất bại
         submitButton.disabled = false;
         submitButton.textContent = 'Gửi AU';
       }
