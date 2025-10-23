@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tạo AU | My AUS Wiki</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <h1>Tạo AU Mới</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="./index.html">Trang chủ</a></li>
+      <li><a href="./aus.html">Danh sách AU</a></li>
+      <li><a href="./create-aus.html" class="active">Tạo AU</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến! (Thay <code>API_BASE</code> bằng URL backend của bạn trong script).</p>
+
+    <form id="create-au-form">
+      <label for="au-name">Tên AU</label>
+      <input type="text" id="au-name" placeholder="Nhập tên AU" required>
+
+      <label for="au-author">Tác giả</label>
+      <input type="text" id="au-author" placeholder="Tên người tạo" required>
+
+      <label for="au-desc">Mô tả ngắn</label>
+      <textarea id="au-desc" placeholder="Viết mô tả..." required></textarea>
+
+      <label for="au-link">Liên kết (nếu có)</label>
+      <input type="url" id="au-link" placeholder="https://...">
+
+      <button type="submit" id="submit-button">Gửi AU</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My AUS Wiki</p>
+  </footer>
+
+  <script>
+    // IMPORTANT: Replace the API_BASE value with your backend URL (Render/Glitch) before uploading.
+    const API_BASE = "https://dust-aus-backend.onrender.com"; // <-- REPLACE with your actual backend
+
+    const form = document.getElementById('create-au-form');
+    const btn = document.getElementById('submit-button');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Đang gửi...';
+
+      const payload = {
+        name: document.getElementById('au-name').value.trim(),
+        author: document.getElementById('au-author').value.trim(),
+        desc: document.getElementById('au-desc').value.trim(),
+        link: document.getElementById('au-link').value.trim()
+      };
+
+      try {
+        const res = await fetch(API_BASE + '/aus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          alert(data.message || 'Đã gửi AU thành công!');
+          form.reset();
+        } else {
+          const err = await res.json().catch(()=>({message:'Server error'}));
+          alert('Gửi thất bại: ' + (err.message || 'Lỗi'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Không thể kết nối đến backend — kiểm tra URL hoặc server đang ngủ.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Gửi AU';
+      }
+    });
+  </script>
+</body>
+</html>
