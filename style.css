@@ -1,103 +1,178 @@
-/* --- Cài đặt chung cho toàn trang --- */
+/* === DUSTTALE STYLE: DARK BLOOD & MAGIC === */
+
+/* Tổng thể */
 body {
-    background-color: #1a1a1a; /* Màu nền tối */
-    color: #e0e0e0;           /* Màu chữ sáng (gần trắng) */
-    font-family: Arial, sans-serif; /* Phông chữ dễ đọc */
-    margin: 0;
-    padding: 0;
+  background-color: #0b0a10;        /* Nền đen tím */
+  color: #f0e6ff;                   /* Chữ tím nhạt */
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
 }
 
-/* --- 1. Tiêu đề Wiki --- */
+/* --- 1. Phần tiêu đề --- */
 header {
-    background-color: #0d0d0d; /* Nền đen tuyền cho tiêu đề */
-    padding: 15px;
-    text-align: center;
-    border-bottom: 3px solid #444;
+  background-color: #1b1520;
+  border-bottom: 3px solid #b30059;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(255, 0, 120, 0.3);
 }
 
 header h1 {
-    color: #ffffff;
-    margin: 0;
-    font-size: 2em; /* 2em = gấp 2 lần cỡ chữ bình thường */
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c, 0 0 25px #b30059;
+  font-size: 2em;
+  margin: 0;
 }
 
 /* --- 2. Thanh điều hướng --- */
 nav {
-    background-color: #333333; /* Nền xám tối cho menu */
-    padding: 10px 0;
+  background-color: #0f0b12;
+  border-top: 1px solid #331a3a;
+  border-bottom: 1px solid #331a3a;
+  box-shadow: 0 0 10px rgba(111, 0, 111, 0.4);
 }
 
 nav ul {
-    list-style: none; /* Bỏ dấu chấm đầu dòng */
-    padding: 0;
-    margin: 0;
-    text-align: center;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  text-align: center;
 }
 
 nav li {
-    display: inline-block; /* Hiển thị các mục menu trên cùng một hàng */
-    margin: 0 20px;
+  display: inline-block;
+  margin: 0 25px;
 }
 
 nav a {
-    color: #ffffff; /* Màu chữ trắng */
-    text-decoration: none; /* Bỏ gạch chân */
-    font-weight: bold;
-    font-size: 1.1em;
+  color: #f0e6ff;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.2s;
+  text-shadow: 0 0 6px #b36eff;
 }
 
-/* Thêm hiệu ứng khi di chuột qua link */
 nav a:hover {
-    color: #ffff00; /* Đổi màu vàng (màu đặc trưng của Undertale) */
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c, 0 0 20px #b30059;
 }
 
-/* --- 3. Khu vực nội dung chính --- */
+/* --- 3. Nội dung chính --- */
 main {
-    /* Đặt chiều rộng tối đa và căn giữa nội dung */
-    max-width: 900px;
-    margin: 20px auto; /* 20px lề trên/dưới, auto căn lề trái/phải (căn giữa) */
-    padding: 25px;
-    background-color: #2a2a2a; /* Nền xám đậm hơn cho nội dung */
-    border-radius: 8px; /* Bo góc */
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #111;
+  border: 2px solid #b30059;
+  border-radius: 12px;
+  box-shadow: 0 0 35px rgba(178, 0, 90, 0.5);
 }
 
-article h2 {
-    color: #ffff00; /* Tiêu đề bài viết màu vàng */
-    border-bottom: 2px solid #555;
-    padding-bottom: 5px;
+article h2, h3 {
+  color: #ff004c;
+  text-shadow: 0 0 8px #ff004c;
+  border-bottom: 2px solid #b30059;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
 }
 
-article h3 {
-    color: #f0f0f0;
+article p {
+  color: #e6d4f5;
 }
 
-/* Định dạng cho hình ảnh */
 .page-image {
-    max-width: 100%; /* Đảm bảo ảnh không bị tràn ra ngoài */
-    height: auto;
-    display: block; /* Giúp căn giữa ảnh dễ dàng */
-    margin: 15px auto; /* Căn giữa ảnh */
-    border: 3px solid #444;
-    border-radius: 5px;
+  display: block;
+  margin: 25px auto;
+  max-width: 100%;
+  border: 2px solid #b30059;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255, 0, 120, 0.5);
 }
 
-/* Định dạng các liên kết trong nội dung */
+/* Liên kết trong bài viết */
 article a {
-    color: #4a90e2; /* Màu xanh cho liên kết */
-    text-decoration: none;
+  color: #b36eff;
+  text-decoration: none;
+  font-weight: bold;
 }
-
 article a:hover {
-    text-decoration: underline; /* Thêm gạch chân khi di chuột */
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c;
+  text-decoration: underline;
 }
 
-/* --- Chân trang --- */
+/* --- 4. Infobox / Stats --- */
+.infobox {
+  background: #1b1520;
+  border: 2px solid #b30059;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 25px auto;
+  width: 90%;
+  box-shadow: 0 0 25px rgba(255, 0, 120, 0.4);
+}
+.infobox h3 {
+  color: #ff004c;
+  text-align: center;
+  text-shadow: 0 0 10px #ff004c;
+}
+.infobox dt {
+  color: #ff3366;
+  font-weight: bold;
+  margin-top: 6px;
+}
+.infobox dd {
+  margin-left: 15px;
+  color: #e0cfff;
+}
+
+/* --- 5. Danh sách AU Cards --- */
+.au-card {
+  background: #111;
+  border: 2px solid #b30059;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 25px 0;
+  box-shadow: 0 0 25px rgba(255, 0, 120, 0.4);
+  transition: 0.2s;
+}
+.au-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.7);
+}
+.au-card h2 {
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c;
+}
+.au-card p {
+  color: #e6d4f5;
+}
+.au-card strong {
+  color: #ff66a3;
+}
+.au-card a {
+  color: #b36eff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.au-card a:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 6px #b36eff;
+}
+
+/* --- 6. Chân trang --- */
 footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #0d0d0d;
-    color: #777;
-    font-size: 0.9em;
-    border-top: 1px solid #333;
+  text-align: center;
+  background: #0f0b12;
+  color: #777;
+  padding: 20px;
+  margin-top: 40px;
+  border-top: 1px solid #331a3a;
+  font-size: 0.9em;
+}
+footer p {
+  margin: 4px 0;
 }
