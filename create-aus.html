@@ -80,6 +80,14 @@
       box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
       transform: scale(1.05);
     }
+    
+    /* Thêm CSS cho trạng thái "Đang gửi..." */
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
 
     .note {
       text-align: center;
@@ -105,7 +113,7 @@
   </header>
 
   <main>
-    <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến! (Dữ liệu sẽ không được lưu — đây chỉ là bản demo.)</p>
+    <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
 
     <form id="create-au">
       <label for="name">Tên AU</label>
@@ -115,12 +123,12 @@
       <input type="text" id="creator" placeholder="Tên người tạo AU" required>
 
       <label for="summary">Mô tả ngắn</label>
-      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..."></textarea>
+      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
 
       <label for="link">Liên kết (nếu có)</label>
       <input type="url" id="link" placeholder="Ví dụ: https://...">
 
-      <button type="submit">Gửi AU</button>
+      <button type="submit" id="submit-button">Gửi AU</button>
     </form>
   </main>
 
@@ -129,12 +137,63 @@
   </footer>
 
   <script>
-    document.getElementById('create-au').addEventListener('submit', e => {
-      e.preventDefault();
-      alert('AU của bạn đã được gửi! (Phiên bản này chỉ mô phỏng, không lưu dữ liệu thực.)');
-      e.target.reset();
+    const form = document.getElementById('create-au');
+    const submitButton = document.getElementById('submit-button');
+
+    // Chúng ta dùng 'async' để có thể sử dụng 'await' cho fetch
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Ngăn trang tải lại
+
+      // 0. Thay đổi nút để báo đang gửi
+      submitButton.disabled = true;
+      submitButton.textContent = 'Đang gửi...';
+
+      // 1. Địa chỉ Backend (đã cập nhật lên Render)
+      const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+
+      // 2. Lấy dữ liệu từ form và ÁNH XẠ tên cho đúng
+      //    (Backend của bạn cần 'author' và 'desc')
+      const data = {
+        name: document.getElementById('name').value,
+        author: document.getElementById('creator').value, // Lấy từ id 'creator'
+        desc: document.getElementById('summary').value,   // Lấy từ id 'summary'
+        link: document.getElementById('link').value
+      };
+
+      // 3. Gửi yêu cầu bằng fetch()
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          // Nếu máy chủ trả về OK (status 201)
+          const result = await response.json();
+          alert(result.message); // Hiển thị "Đã lưu AU thành công!"
+          form.reset(); // Xóa nội dung form
+        } else {
+          // Nếu máy chủ báo lỗi (ví dụ: thiếu dữ liệu, status 400)
+          const errorResult = await response.json();
+          alert('Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.'));
+        }
+
+      } catch (error) {
+        // Lỗi này bây giờ có thể có nghĩa là Render server đang "ngủ"
+        console.error('Lỗi khi gửi fetch:', error);
+        
+        // Đây là lỗi gốc của bạn, giờ chúng ta thêm chú thích
+        alert('Gửi thất bại: Failed to fetch. Vui lòng kiểm tra lại. (Lưu ý: server miễn phí có thể mất 50 giây để khởi động.)');
+      
+      } finally {
+        // 4. Bật lại nút dù thành công hay thất bại
+        submitButton.disabled = false;
+        submitButton.textContent = 'Gửi AU';
+      }
     });
   </script>
-
-</body>
+  </body>
 </html>
