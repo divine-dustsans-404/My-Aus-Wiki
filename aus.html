@@ -137,50 +137,33 @@
     <p>&copy; 2025 My AUS Wiki | Undertale thuộc Toby Fox.</p>
   </footer>
 
-  <script>
-    // ... (Script của bạn giữ nguyên) ...
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('au-list-container');
-      const loadingMessage = document.getElementById('loading-message');
-      const API_URL = 'https://dust-aus-backend.onrender.com/aus';
-      async function fetchAndDisplayAUs() {
-        try {
-          const response = await fetch(API_URL);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const aus = await response.json();
-          loadingMessage.remove();
-          if (aus.length === 0) {
-            container.innerHTML = '<p id="loading-message">Chưa có AU nào được gửi. Hãy là người đầu tiên!</p>';
-            return;
-          }
-          aus.forEach(au => {
-            const card = document.createElement('article');
-            card.className = 'au-card';
-            let linkHtml = '';
-            if (au.link && au.link !== 'Không có' && au.link.startsWith('http')) {
-              linkHtml = `<a href="${au.link}" class="link-button" target="_blank" rel="noopener noreferrer">Xem thêm</a>`;
-            } else {
-              linkHtml = `<a class="link-button disabled" aria-disabled="true">Không có link</a>`;
-            }
-            const descriptionHtml = au.desc.replace(/\n/g, '<br>');
-            card.innerHTML = `
-              <h2>${au.name}</h2>
-              <p class="author">Tác giả: ${au.author}</p>
-              <p class="description">${descriptionHtml}</p>
-              ${linkHtml}
-            `;
-            container.appendChild(card);
-          });
-        } catch (error) {
-          console.error('Lỗi khi tải AU:', error);
-          loadingMessage.textContent = 'Lỗi: Không thể tải danh sách AU. Server có thể đang ngủ hoặc bị lỗi.';
-        }
-      }
-      fetchAndDisplayAUs();
-    });
-  </script>
+<script>
+const API_URL = "https://dust-aus-backend.onrender.com/aus"; // backend của ngươi
+const container = document.createElement("div");
+container.id = "aus-list";
+document.body.appendChild(container);
 
+async function loadAUs() {
+  container.innerHTML = "<p>Đang tải danh sách...</p>";
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    container.innerHTML = data.length
+      ? data.map(a => `
+        <div class="au-card">
+          <h2>${a.name}</h2>
+          <p><strong>Tác giả:</strong> ${a.author}</p>
+          <p>${a.desc}</p>
+          ${a.link ? `<a href="${a.link}" target="_blank">Liên kết</a>` : ""}
+        </div>
+      `).join("")
+      : "<p>Chưa có AU nào được gửi.</p>";
+  } catch (err) {
+    container.innerHTML = "<p>Lỗi tải danh sách AU. Có thể server Render đang ngủ.</p>";
+  }
+}
+
+loadAUs();
+</script>
 </body>
 </html>
