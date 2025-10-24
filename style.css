@@ -48,12 +48,12 @@ nav a {
 
 /* Thêm hiệu ứng khi di chuột qua link */
 nav a:hover {
-    color: #ffff00; /* Đổi màu vàng (màu đặc trưng của Undertale) */
+    color: #ff004c; /* ĐÃ SỬA: Đổi màu vàng sang Đỏ/Hồng */
 }
 
-/* Thêm class 'active' cho trang hiện tại (MÀU VÀNG) */
+/* Thêm class 'active' cho trang hiện tại (MÀU ĐỎ/HỒNG) */
 nav a.active {
-    color: #ffff00;
+    color: #ff004c; /* ĐÃ SỬA: Đổi màu vàng sang Đỏ/Hồng */
 }
 
 /* --- 3. Khu vực nội dung chính --- */
@@ -67,7 +67,7 @@ main {
 }
 
 article h2, main h2 { /* Áp dụng cho cả trang chủ và các trang con */
-    color: #ffff00; /* Tiêu đề bài viết màu vàng */
+    color: #ff004c; /* ĐÃ SỬA: Tiêu đề bài viết màu Đỏ/Hồng */
     border-bottom: 2px solid #555;
     padding-bottom: 5px;
 }
@@ -88,7 +88,7 @@ article h3, main h3 {
 
 /* Định dạng các liên kết trong nội dung */
 article a, main a {
-    color: #4a90e2; /* Màu xanh cho liên kết */
+    color: #4a90e2; /* Màu xanh cho liên kết (Giữ nguyên hoặc có thể đổi sang tím/đỏ nếu muốn) */
     text-decoration: none;
 }
 
@@ -103,16 +103,16 @@ article a:hover, main a:hover {
     margin-left: 20px;
     margin-bottom: 15px;
     background-color: #000;
-    border: 2px solid #fff;
+    border: 2px solid #b30059; /* ĐÃ SỬA: Viền màu Tím/Hồng đậm */
     padding: 10px;
     font-family: 'Courier New', monospace;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    color: #f0e6ff; /* ĐÃ SỬA: Màu chữ trắng tím */
+    box-shadow: 0 0 10px rgba(179, 0, 89, 0.8); /* ĐÃ SỬA: Box Shadow màu Tím/Hồng đậm */
 }
 
 .infobox h3 {
     text-align: center;
-    color: #fff;
+    color: #ff004c; /* ĐÃ SỬA: Tiêu đề Infobox màu Đỏ/Hồng */
     margin: 0 0 5px 0;
     font-size: 1.2em;
 }
@@ -142,7 +142,7 @@ article a:hover, main a:hover {
 }
 
 .infobox p span {
-    color: #ff004c; /* Màu đỏ */
+    color: #ff004c; /* Màu đỏ (Giữ nguyên) */
     float: right;
     font-weight: bold;
 }
