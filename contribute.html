@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* CSS nội bộ chỉ dành cho trang này */
+        /* ... (Toàn bộ CSS nội bộ của bạn cho trang này) ... */
         .contribution-section {
             background-color: #1e1e1e;
             border: 1px solid #444;
@@ -16,7 +16,7 @@
             margin-bottom: 20px;
         }
         .contribution-section h3 {
-            color: #ffff00; /* Màu vàng */
+            color: #ffff00; 
         }
         .contribution-section ul {
             list-style-type: disc;
@@ -40,17 +40,29 @@
     const splash = document.getElementById('splash-screen');
     const video = document.getElementById('splash-video');
 
-    // 2. Chạy hàm này khi video KẾT THÚC
-    video.onended = function() {
-      // Thêm lớp CSS 'fade-out' để kích hoạt hiệu ứng mờ
+    // 2. Kiểm tra xem intro đã được phát trong phiên này chưa
+    if (sessionStorage.getItem('introPlayed') === 'true') {
+      // Nếu ĐÃ PHÁT RỒI: Ẩn ngay lập tức
       splash.classList.add('fade-out');
-    };
-    
-    // 3. (Dự phòng) Nếu video bị lỗi không tải được
-    video.onerror = function() {
-      // Bỏ qua intro và ẩn nó ngay lập tức
-      splash.classList.add('fade-out');
-    };
+    } else {
+      // Nếu CHƯA PHÁT: Cài đặt sự kiện cho nó
+      
+      // 3. Chạy hàm này khi video KẾT THÚC
+      video.onended = function() {
+        // Ẩn màn hình chờ
+        splash.classList.add('fade-out');
+        // Đánh dấu là "đã phát" vào trí nhớ tạm
+        sessionStorage.setItem('introPlayed', 'true');
+      };
+      
+      // 4. (Dự phòng) Nếu video bị lỗi không tải được
+      video.onerror = function() {
+        // Bỏ qua intro và ẩn nó ngay lập tức
+        splash.classList.add('fade-out');
+        // Vẫn đánh dấu là "đã phát" để không thử lại
+        sessionStorage.setItem('introPlayed', 'true');
+      };
+    }
   </script>
   <header>
         <h1>Dusttale</h1>
