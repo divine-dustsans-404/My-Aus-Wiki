@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Mỗi mục AU sẽ có một đường viền */
+    .au-item {
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+    .au-item h3 {
+      color: #ffff00; /* Màu vàng giống tiêu đề */
+      margin-top: 0;
+      border-bottom: 1px dashed #555;
+      padding-bottom: 5px;
+    }
+    .au-item strong {
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,18 +42,85 @@
         </ul>
     </nav>
 
-    <main>
+    <main id="au-list-container">
+      
         <h2>Danh sách AU</h2>
-        
-        <p>Hiện tại chưa có AU nào được gửi lên. Hãy là người đầu tiên đóng góp!</p>
-        <p><a href="create-aus.html">Nhấn vào đây để tạo AU mới</a>.</p>
+        <p>Đang tải danh sách từ máy chủ...</p>
 
-        </main>
+    </main>
 
     <footer>
         <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
         <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
     </footer>
+
+    <script>
+      // 1. Chờ cho toàn bộ nội dung HTML của trang được tải xong
+      window.addEventListener('DOMContentLoaded', () => {
+        // 2. Gọi hàm của chúng ta để bắt đầu tải AUs
+        loadAUs();
+      });
+
+      // 3. Đây là hàm 'async' (bất đồng bộ) chính
+      async function loadAUs() {
+        // Địa chỉ máy chủ (giống hệt trang create-aus.html)
+        const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+        
+        // 4. Tìm phần <main> mà chúng ta đã đặt ID
+        const main = document.getElementById('au-list-container');
+
+        try {
+          // 5. Gửi yêu cầu GET (lấy dữ liệu) đến máy chủ
+          const response = await fetch(BACKEND_URL);
+
+          if (!response.ok) {
+            // Nếu máy chủ báo lỗi (vd: 500)
+            throw new Error('Lỗi máy chủ: ' + response.status);
+          }
+
+          // 6. Chuyển đổi dữ liệu nhận được từ JSON thành một mảng JavaScript
+          const aus = await response.json();
+
+          // 7. Xóa nội dung "Đang tải..."
+          main.innerHTML = ''; 
+
+          // Thêm lại tiêu đề
+          const title = document.createElement('h2');
+          title.textContent = 'Danh sách AU';
+          main.appendChild(title);
+
+          // 8. Kiểm tra xem máy chủ có trả về AU nào không
+          if (aus.length === 0) {
+            main.innerHTML += '<p>Hiện tại chưa có AU nào được gửi lên. Hãy là người đầu tiên đóng góp!</p>';
+            main.innerHTML += '<p><a href="create-aus.html">Nhấn vào đây để tạo AU mới</a>.</p>';
+          } else {
+            // 9. Lặp qua từng AU trong mảng
+            aus.forEach(au => {
+              // Tạo một khối HTML cho mỗi AU
+              const auHtml = `
+                <article class="au-item">
+                  <h3>${au.name}</h3>
+                  <p><strong>Tác giả:</strong> ${au.author}</p>
+                  <p>${au.desc}</p>
+                  
+                  ${au.link ? `<p><a href="${au.link}" target="_blank" rel="noopener noreferrer">Xem thêm liên kết</a></p>` : ''}
+                </article>
+              `;
+              
+              // 10. Chèn khối HTML vừa tạo vào cuối thẻ <main>
+              main.insertAdjacentHTML('beforeend', auHtml);
+            });
+          }
+
+        } catch (error) {
+          // 11. Nếu có lỗi (vd: mất mạng, máy chủ sập)
+          console.error('Không thể tải AUs:', error);
+          main.innerHTML = '<h2>Đã xảy ra lỗi</h2>';
+          main.innerHTML += '<p>Không thể tải danh sách AU từ máy chủ. Vui lòng thử lại sau.</p>';
+          main.innerHTML += `<p><i>Chi tiết lỗi: ${error.message}</i></p>`;
+        }
+      }
+    </script>
 
 </body>
 </html>
