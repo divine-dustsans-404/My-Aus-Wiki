@@ -7,38 +7,34 @@
   <link rel="stylesheet" href="style.css">
   
   <style>
-    /* Mỗi mục AU sẽ có một đường viền */
+    /* ... (Toàn bộ CSS nội bộ cho .au-item và .delete-btn của bạn) ... */
     .au-item {
       background-color: #1a1a1a;
       border: 1px solid #444;
       padding: 10px 15px;
       margin-bottom: 15px;
       border-radius: 5px;
-      overflow: hidden; /* Thêm để chứa nút float */
+      overflow: hidden; 
     }
     .au-item h3 {
-      color: #ffff00; /* Màu vàng giống tiêu đề */
+      color: #ffff00; 
       margin-top: 0;
       border-bottom: 1px dashed #555;
       padding-bottom: 5px;
-      
-      /* Thay đổi nhỏ để tiêu đề không đè lên nút xóa */
       margin-right: 60px; 
     }
     .au-item strong {
       color: #ccc;
     }
-    
-    /* --- THÊM MỚI CSS CHO NÚT XÓA --- */
     .delete-btn {
-      background-color: #7d0000; /* Màu đỏ sẫm */
+      background-color: #7d0000; 
       color: #ffcccc;
       border: 1px solid #ff0000;
       padding: 3px 8px;
       font-size: 0.8em;
       border-radius: 4px;
       cursor: pointer;
-      float: right; /* Đẩy nút sang bên phải */
+      float: right; 
     }
     .delete-btn:hover {
       background-color: #ff0000;
@@ -48,7 +44,33 @@
 </head>
 <body>
 
-    <header>
+  <div id="splash-screen">
+    <video 
+      id="splash-video"
+      src="intro.mp4" 
+      autoplay 
+      muted 
+      playsinline
+    ></video>
+  </div>
+  <script>
+    // 1. Tìm màn hình chờ và video
+    const splash = document.getElementById('splash-screen');
+    const video = document.getElementById('splash-video');
+
+    // 2. Chạy hàm này khi video KẾT THÚC
+    video.onended = function() {
+      // Thêm lớp CSS 'fade-out' để kích hoạt hiệu ứng mờ
+      splash.classList.add('fade-out');
+    };
+    
+    // 3. (Dự phòng) Nếu video bị lỗi không tải được
+    video.onerror = function() {
+      // Bỏ qua intro và ẩn nó ngay lập tức
+      splash.classList.add('fade-out');
+    };
+  </script>
+  <header>
         <h1>Dusttale</h1>
     </header>
 
@@ -77,11 +99,12 @@
     <script>
       window.addEventListener('DOMContentLoaded', () => {
         loadAUs();
-        setupDeleteListener(); // <--- THÊM MỚI
+        setupDeleteListener(); 
       });
 
-      // HÀM TẢI DỮ LIỆU (ĐÃ SỬA LỖI XSS VÀ THÊM NÚT)
+      // HÀM TẢI DỮ LIỆU
       async function loadAUs() {
+        // ... (Toàn bộ code loadAUs của bạn giữ nguyên) ...
         const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
         const main = document.getElementById('au-list-container');
         
@@ -101,18 +124,15 @@
             main.innerHTML += '<p><a href="create-aus.html">Nhấn vào đây để tạo AU mới</a>.</p>';
           } else {
             
-            // --- BẮT ĐẦU VÒNG LẶP NÂNG CẤP (AN TOÀN + NÚT XÓA) ---
             aus.forEach(au => {
               const article = document.createElement('article');
               article.className = 'au-item';
 
-              // --- NÚT XÓA (THÊM MỚI) ---
               const deleteButton = document.createElement('button');
               deleteButton.textContent = 'Xóa';
               deleteButton.className = 'delete-btn';
-              deleteButton.dataset.id = au._id; // <-- Rất quan trọng: MongoDB ID
+              deleteButton.dataset.id = au._id; 
               article.appendChild(deleteButton);
-              // --- KẾT THÚC NÚT XÓA ---
 
               const h3 = document.createElement('h3');
               h3.textContent = au.name;
@@ -140,7 +160,6 @@
               
               main.appendChild(article);
             });
-            // --- KẾT THÚC VÒNG LẶP NÂNG CẤP ---
           }
         } catch (error) {
           console.error('Không thể tải AUs:', error);
@@ -148,35 +167,30 @@
           main.innerHTML += '<p>Không thể tải danh sách AU từ máy chủ. Vui lòng thử lại sau.</p>';
           main.innerHTML += `<p><i>Chi tiết lỗi: ${error.message}</i></p>`;
         }
-      } // <-- Đóng hàm loadAUs
+      } 
 
-      // --- PHẦN MỚI: XỬ LÝ XÓA ---
-
-      // 1. Thiết lập bộ lắng nghe
+      // HÀM XỬ LÝ XÓA
       function setupDeleteListener() {
+        // ... (Toàn bộ code setupDeleteListener của bạn giữ nguyên) ...
         const main = document.getElementById('au-list-container');
-        // Lắng nghe mọi cú nhấp chuột trong thẻ <main>
         main.addEventListener('click', (e) => {
-          // Chỉ hành động nếu nhấp vào nút có class 'delete-btn'
           if (e.target.classList.contains('delete-btn')) {
             handleDelete(e.target);
           }
         });
       }
 
-      // 2. Hàm xóa chính
       async function handleDelete(button) {
-        const auId = button.dataset.id; // Lấy ID từ nút
+        // ... (Toàn bộ code handleDelete của bạn giữ nguyên) ...
+        const auId = button.dataset.id; 
         const auName = button.closest('.au-item').querySelector('h3').textContent;
 
-        // 3. Yêu cầu Mật khẩu (Admin Token)
         const token = prompt(`Bạn có chắc muốn xóa "${auName}"?\n\nNhập Mật khẩu Admin để xác nhận:`);
 
         if (!token) {
-          return; // Người dùng nhấn Hủy
+          return; 
         }
 
-        // 4. Gửi yêu cầu DELETE đến máy chủ
         const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
         button.textContent = 'Đang xóa...';
         button.disabled = true;
@@ -185,17 +199,14 @@
           const response = await fetch(`${BACKEND_URL}/${auId}`, {
             method: 'DELETE',
             headers: {
-              // Gửi "chìa khóa" bí mật trong header
               'Authorization': token 
             }
           });
 
           if (response.ok) {
-            // 5. Nếu thành công, xóa AU khỏi trang web
             button.closest('.au-item').remove();
             alert(`Đã xóa "${auName}" thành công!`);
           } else {
-            // 6. Nếu thất bại (sai mật khẩu, lỗi máy chủ)
             const error = await response.json();
             alert(`Xóa thất bại: ${error.message}`);
             button.textContent = 'Xóa';
@@ -209,7 +220,6 @@
           button.disabled = false;
         }
       }
-      // --- KẾT THÚC PHẦN MỚI ---
     </script>
 </body>
 </html>
