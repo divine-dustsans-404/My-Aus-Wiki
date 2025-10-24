@@ -72,6 +72,22 @@
       font-size: 0.9em;
       margin-bottom: 15px;
     }
+    
+    /* --- CSS CHO THÔNG BÁO MỚI --- */
+    #form-message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .message-success {
+      color: #b36eff; /* Màu tím (Theo ý bạn!) */
+    }
+    .message-error {
+      color: #ff004c; /* Màu đỏ/hồng (giống tiêu đề) */
+    }
+    /* --- KẾT THÚC CSS MỚI --- */
+
   </style>
 </head>
 <body>
@@ -109,6 +125,9 @@
       <input type="url" id="link" placeholder="Ví dụ: https://...">
 
       <button type="submit" id="submit-button">Gửi AU</button>
+      
+      <div id="form-message"></div>
+      
     </form>
   </main>
 
@@ -118,17 +137,20 @@
   </footer>
 
   <script>
+    // --- BẮT ĐẦU JAVASCRIPT NÂNG CẤP ---
     const form = document.getElementById('create-au');
     const submitButton = document.getElementById('submit-button');
+    const messageDiv = document.getElementById('form-message'); // Lấy thẻ div thông báo
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault(); 
       submitButton.disabled = true;
       submitButton.textContent = 'Đang gửi...';
+      messageDiv.textContent = ''; // Xóa thông báo cũ
+      messageDiv.className = '';   // Xóa màu cũ
 
       const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
 
-      // --- BẮT ĐẦU THAY ĐỔI ---
       // 2. Lấy dữ liệu từ form (và dùng .trim() để xóa dấu cách thừa)
       const data = {
         name: document.getElementById('name').value.trim(),
@@ -136,7 +158,6 @@
         desc: document.getElementById('summary').value.trim(),   
         link: document.getElementById('link').value.trim()
       };
-      // --- KẾT THÚC THAY ĐỔI ---
 
       // 3. Gửi yêu cầu bằng fetch()
       try {
@@ -149,23 +170,40 @@
         });
 
         if (response.ok) {
+          // --- THÀNH CÔNG ---
           const result = await response.json();
-          alert(result.message); // "Đã lưu AU thành công!"
           form.reset();
+          messageDiv.textContent = result.message; // "Đã lưu AU thành công!"
+          messageDiv.className = 'message-success'; // Dùng màu tím
+
+          // Chờ 2 giây rồi mới chuyển trang
+          setTimeout(() => {
+            window.location.href = 'aus.html';
+          }, 2000); // 2000 mili-giây = 2 giây
+          
+          // Không bật lại nút Gửi
+
         } else {
+          // --- LỖI TỪ MÁY CHỦ (Vd: 400, 500) ---
           const errorResult = await response.json();
-          alert('Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.'));
+          messageDiv.textContent = 'Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.');
+          messageDiv.className = 'message-error';
+          // Bật lại nút nếu có lỗi
+          submitButton.disabled = false;
+          submitButton.textContent = 'Gửi AU';
         }
 
       } catch (error) {
+        // --- LỖI MẠNG (Vd: Mất mạng, Render sập) ---
         console.error('Lỗi khi gửi fetch:', error);
-        alert('Gửi thất bại: Failed to fetch. Vui lòng kiểm tra lại. (Lưu ý: server miễn phí có thể mất 50 giây để khởi động.)');
-      
-      } finally {
+        messageDiv.textContent = 'Gửi thất bại: Không thể kết nối máy chủ. Vui lòng thử lại.';
+        messageDiv.className = 'message-error';
+        // Bật lại nút nếu có lỗi
         submitButton.disabled = false;
         submitButton.textContent = 'Gửi AU';
       }
     });
+    // --- KẾT THÚC JAVASCRIPT NÂNG CẤP ---
   </script>
   </body>
 </html>
