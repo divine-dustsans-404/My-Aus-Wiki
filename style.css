@@ -158,3 +158,38 @@ footer {
     border-top: 1px solid #333;
     clear: both; /* Đảm bảo footer luôn ở dưới cùng (quan trọng vì .infobox dùng float) */
 }
+
+/* --- 6. Tối ưu hóa cho điện thoại (Responsive Design) --- */
+
+/* Điều chỉnh lại khu vực nội dung chính trên màn hình nhỏ */
+@media (max-width: 768px) {
+    /* Màn hình nhỏ hơn 768px (thường là máy tính bảng/điện thoại) */
+    
+    /* Bỏ float Infobox để nó không làm tràn trang */
+    .infobox {
+        float: none;
+        width: 100%; /* Chiếm toàn bộ chiều rộng có sẵn */
+        margin-left: 0;
+    }
+    
+    /* Cập nhật lề cho main khi không có infobox nổi */
+    main {
+        padding: 15px;
+        margin: 10px; /* Lề nhỏ hơn */
+    }
+    
+    /* KHẮC PHỤC HÌNH ẢNH: Đảm bảo hình ảnh không quá lớn */
+    .page-image {
+        /* Đã có max-width: 100% */
+        /* Giới hạn chiều rộng tối đa tuyệt đối để ảnh không quá to */
+        max-width: 400px; 
+        /* Giới hạn chiều cao tối đa tuyệt đối (ví dụ: 60vh = 60% chiều cao màn hình) */
+        max-height: 60vh;
+        width: auto; /* Cho phép nó co giãn theo max-height nếu cần */
+    }
+    
+    /* Giảm kích thước font cho thanh điều hướng */
+    nav li {
+        margin: 0 10px;
+    }
+}
