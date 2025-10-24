@@ -5,49 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Mỗi mục AU sẽ có một đường viền */
+    .au-item {
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      overflow: hidden; /* Thêm để chứa nút float */
+    }
+    .au-item h3 {
+      color: #ffff00; /* Màu vàng giống tiêu đề */
+      margin-top: 0;
+      border-bottom: 1px dashed #555;
+      padding-bottom: 5px;
+      
+      /* Thay đổi nhỏ để tiêu đề không đè lên nút xóa */
+      margin-right: 60px; 
+    }
+    .au-item strong {
+      color: #ccc;
+    }
+    
+    /* --- THÊM MỚI CSS CHO NÚT XÓA --- */
+    .delete-btn {
+      background-color: #7d0000; /* Màu đỏ sẫm */
+      color: #ffcccc;
+      border: 1px solid #ff0000;
+      padding: 3px 8px;
+      font-size: 0.8em;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right; /* Đẩy nút sang bên phải */
+    }
+    .delete-btn:hover {
+      background-color: #ff0000;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Danh sách AU</h1>
+
+    <header>
+        <h1>Dusttale</h1>
+    </header>
+
     <nav>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="aus.html" class="active">Danh sách AU</a></li>
-        <li><a href="characters.html">Nhân vật</a></li>
-        <li><a href="create-aus.html">Tạo AU</a></li>
-        <li><a href="contribute.html">Đóng góp</a></li>
-      </ul>
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="aus.html" class="active">Danh sách AU</a></li>
+            <li><a href="create-aus.html">Tạo AU</a></li>
+            <li><a href="characters.html">Nhân vật</a></li>
+            <li><a href="contribute.html">Đóng góp</a></li>
+        </ul>
     </nav>
-  </header>
 
-  <main>
-    <section id="au-list"></section>
-  </main>
+    <main id="au-list-container">
+      
+        <h2>Danh sách AU</h2>
+        <p>Đang tải danh sách từ máy chủ...</p>
 
-  <footer>
-    <p>&copy; 2025 My AUS Wiki</p>
-  </footer>
+    </main>
 
-  <script>
-  const API_BASE = "https://dust-aus-backend.onrender.com";
-  async function loadAUs() {
-    try {
-      const res = await fetch(`${API_BASE}/aus`);
-      const data = await res.json();
-      const list = document.getElementById("au-list");
-      list.innerHTML = data.map(au => `
-        <div class="au-card">
-          <h3>${au.name}</h3>
-          <p><strong>Tác giả:</strong> ${au.author}</p>
-          <p>${au.desc}</p>
-          ${au.link ? `<a href="${au.link}" target="_blank">Xem thêm</a>` : ""}
-        </div>
-      `).join("");
-    } catch (err) {
-      document.getElementById("au-list").innerHTML = "<p>Lỗi tải dữ liệu.</p>";
-    }
-  }
-  loadAUs();
-  </script>
+    <footer>
+        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
+        <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
+    </footer>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        loadAUs();
+        setupDeleteListener(); // <--- THÊM MỚI
+      });
+
+      // HÀM TẢI DỮ LIỆU (ĐÃ SỬA LỖI XSS VÀ THÊM NÚT)
+      async function loadAUs() {
+        const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+        const main = document.getElementById('au-list-container');
+        
+        try {
+          const response = await fetch(BACKEND_URL);
+          if (!response.ok) throw new Error('Lỗi máy chủ: ' + response.status);
+          
+          const aus = await response.json();
+          main.innerHTML = ''; 
+          
+          const title = document.createElement('h2');
+          title.textContent = 'Danh sách AU';
+          main.appendChild(title);
+
+          if (aus.length === 0) {
+            main.innerHTML += '<p>Hiện tại chưa có AU nào được gửi lên. Hãy là người đầu tiên đóng góp!</p>';
+            main.innerHTML += '<p><a href="create-aus.html">Nhấn vào đây để tạo AU mới</a>.</p>';
+          } else {
+            
+            // --- BẮT ĐẦU VÒNG LẶP NÂNG CẤP (AN TOÀN + NÚT XÓA) ---
+            aus.forEach(au => {
+              const article = document.createElement('article');
+              article.className = 'au-item';
+
+              // --- NÚT XÓA (THÊM MỚI) ---
+              const deleteButton = document.createElement('button');
+              deleteButton.textContent = 'Xóa';
+              deleteButton.className = 'delete-btn';
+              deleteButton.dataset.id = au._id; // <-- Rất quan trọng: MongoDB ID
+              article.appendChild(deleteButton);
+              // --- KẾT THÚC NÚT XÓA ---
+
+              const h3 = document.createElement('h3');
+              h3.textContent = au.name;
+              article.appendChild(h3);
+              
+              const pAuthor = document.createElement('p');
+              pAuthor.innerHTML = '<strong>Tác giả:</strong> ';
+              pAuthor.appendChild(document.createTextNode(au.author || 'Không rõ'));
+              article.appendChild(pAuthor);
+
+              const pDesc = document.createElement('p');
+              pDesc.textContent = au.desc;
+              article.appendChild(pDesc);
+
+              if (au.link && au.link.trim() !== '') {
+                const pLink = document.createElement('p');
+                const a = document.createElement('a');
+                a.href = au.link;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = 'Xem thêm liên kết';
+                pLink.appendChild(a);
+                article.appendChild(pLink);
+              }
+              
+              main.appendChild(article);
+            });
+            // --- KẾT THÚC VÒNG LẶP NÂNG CẤP ---
+          }
+        } catch (error) {
+          console.error('Không thể tải AUs:', error);
+          main.innerHTML = '<h2>Đã xảy ra lỗi</h2>';
+          main.innerHTML += '<p>Không thể tải danh sách AU từ máy chủ. Vui lòng thử lại sau.</p>';
+          main.innerHTML += `<p><i>Chi tiết lỗi: ${error.message}</i></p>`;
+        }
+      } // <-- Đóng hàm loadAUs
+
+      // --- PHẦN MỚI: XỬ LÝ XÓA ---
+
+      // 1. Thiết lập bộ lắng nghe
+      function setupDeleteListener() {
+        const main = document.getElementById('au-list-container');
+        // Lắng nghe mọi cú nhấp chuột trong thẻ <main>
+        main.addEventListener('click', (e) => {
+          // Chỉ hành động nếu nhấp vào nút có class 'delete-btn'
+          if (e.target.classList.contains('delete-btn')) {
+            handleDelete(e.target);
+          }
+        });
+      }
+
+      // 2. Hàm xóa chính
+      async function handleDelete(button) {
+        const auId = button.dataset.id; // Lấy ID từ nút
+        const auName = button.closest('.au-item').querySelector('h3').textContent;
+
+        // 3. Yêu cầu Mật khẩu (Admin Token)
+        const token = prompt(`Bạn có chắc muốn xóa "${auName}"?\n\nNhập Mật khẩu Admin để xác nhận:`);
+
+        if (!token) {
+          return; // Người dùng nhấn Hủy
+        }
+
+        // 4. Gửi yêu cầu DELETE đến máy chủ
+        const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+        button.textContent = 'Đang xóa...';
+        button.disabled = true;
+
+        try {
+          const response = await fetch(`${BACKEND_URL}/${auId}`, {
+            method: 'DELETE',
+            headers: {
+              // Gửi "chìa khóa" bí mật trong header
+              'Authorization': token 
+            }
+          });
+
+          if (response.ok) {
+            // 5. Nếu thành công, xóa AU khỏi trang web
+            button.closest('.au-item').remove();
+            alert(`Đã xóa "${auName}" thành công!`);
+          } else {
+            // 6. Nếu thất bại (sai mật khẩu, lỗi máy chủ)
+            const error = await response.json();
+            alert(`Xóa thất bại: ${error.message}`);
+            button.textContent = 'Xóa';
+            button.disabled = false;
+          }
+
+        } catch (err) {
+          console.error('Lỗi khi xóa:', err);
+          alert('Lỗi kết nối khi đang cố xóa.');
+          button.textContent = 'Xóa';
+          button.disabled = false;
+        }
+      }
+      // --- KẾT THÚC PHẦN MỚI ---
+    </script>
 </body>
 </html>
