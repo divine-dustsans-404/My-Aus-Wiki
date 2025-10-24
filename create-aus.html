@@ -5,218 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tạo AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
-  
-  <style>
-    /* ... (Toàn bộ CSS nội bộ của bạn cho form và thông báo) ... */
-    main h2 {
-      color: #ff004c;
-      text-shadow: 0 0 10px #ff004c;
-    }
-    form label {
-      color: #ff3366;
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-    form input, form textarea {
-      width: 100%;
-      background: #1b1520;
-      border: 1px solid #331a3a;
-      color: #f0e6ff;
-      border-radius: 5px;
-      padding: 8px;
-      margin-bottom: 15px;
-      font-size: 1em;
-      box-shadow: inset 0 0 10px rgba(111, 0, 111, 0.3);
-      box-sizing: border-box; 
-    }
-    form textarea {
-      resize: vertical;
-      height: 150px;
-    }
-    button {
-      background: #b30059;
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-      text-shadow: 0 0 4px #fff;
-    }
-    button:hover {
-      background: #ff004c;
-      box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
-      transform: scale(1.05);
-    }
-    button:disabled {
-      background: #555;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    .note {
-      text-align: center;
-      color: #b36eff;
-      font-size: 0.9em;
-      margin-bottom: 15px;
-    }
-    #form-message {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 1.1em;
-      font-weight: bold;
-    }
-    .message-success {
-      color: #b36eff; 
-    }
-    .message-error {
-      color: #ff004c; 
-    }
-  </style>
 </head>
 <body>
-
-  <div id="splash-screen">
-    <video 
-      id="splash-video"
-      src="intro.mp4" 
-      autoplay 
-      muted 
-      playsinline
-    ></video>
-  </div>
-  <script>
-    // 1. Tìm màn hình chờ và video
-    const splash = document.getElementById('splash-screen');
-    const video = document.getElementById('splash-video');
-
-    // 2. Kiểm tra xem intro đã được phát trong phiên này chưa
-    if (sessionStorage.getItem('introPlayed') === 'true') {
-      // Nếu ĐÃ PHÁT RỒI: Ẩn ngay lập tức
-      splash.classList.add('fade-out');
-    } else {
-      // Nếu CHƯA PHÁT: Cài đặt sự kiện cho nó
-      
-      // 3. Chạy hàm này khi video KẾT THÚC
-      video.onended = function() {
-        // Ẩn màn hình chờ
-        splash.classList.add('fade-out');
-        // Đánh dấu là "đã phát" vào trí nhớ tạm
-        sessionStorage.setItem('introPlayed', 'true');
-      };
-      
-      // 4. (Dự phòng) Nếu video bị lỗi không tải được
-      video.onerror = function() {
-        // Bỏ qua intro và ẩn nó ngay lập tức
-        splash.classList.add('fade-out');
-        // Vẫn đánh dấu là "đã phát" để không thử lại
-        sessionStorage.setItem('introPlayed', 'true');
-      };
-    }
-  </script>
   <header>
-      <h1>Dusttale</h1>
+    <h1>Tạo AU Mới</h1>
   </header>
 
-  <nav>
-      <ul>
-          <li><a href="index.html">Trang chủ</a></li>
-          <li><a href="aus.html">Danh sách AU</a></li>
-          <li><a href="create-aus.html" class="active">Tạo AU</a></li>
-          <li><a href="characters.html">Nhân vật</a></li>
-          <li><a href="contribute.html">Đóng góp</a></li>
-      </ul>
-  </nav>
-
   <main>
-    <h2>Tạo AU Mới</h2>
-
     <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
 
-    <form id="create-au">
-      <label for="name">Tên AU</label>
-      <input type="text" id="name" placeholder="Nhập tên AU của bạn" required>
+    <form id="create-au-form">
+      <label for="au-name">Tên AU</label>
+      <input type="text" id="au-name" placeholder="Nhập tên AU của bạn" required>
 
-      <label for="creator">Tác giả</label>
-      <input type="text" id="creator" placeholder="Tên người tạo AU" required>
+      <label for="au-author">Tác giả</label>
+      <input type="text" id="au-author" placeholder="Tên người tạo AU" required>
 
-      <label for="summary">Mô tả ngắn</label>
-      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
+      <label for="au-desc">Mô tả ngắn</label>
+      <textarea id="au-desc" placeholder="Viết mô tả ngắn về AU..." required></textarea>
 
-      <label for="link">Liên kết (nếu có)</label>
-      <input type="url" id="link" placeholder="Ví dụ: https://...">
+      <label for="au-link">Liên kết (nếu có)</label>
+      <input type="url" id="au-link" placeholder="Ví dụ: https://...">
 
-      <button type="submit" id="submit-button">Gửi AU</button>
-      
-      <div id="form-message"></div>
-      
+      <button type="submit">Gửi AU</button>
     </form>
   </main>
 
   <footer>
-      <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
-      <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
+    <p>&copy; 2025 My AUS Wiki | Undertale thuộc Toby Fox.</p>
   </footer>
 
   <script>
-    const form = document.getElementById('create-au');
-    const submitButton = document.getElementById('submit-button');
-    const messageDiv = document.getElementById('form-message'); 
+  const API_BASE = "https://dust-aus-backend.onrender.com";
+  const form = document.getElementById("create-au-form");
 
-    form.addEventListener('submit', async (e) => {
-      // ... (Toàn bộ code submit form của bạn giữ nguyên) ...
-      e.preventDefault(); 
-      submitButton.disabled = true;
-      submitButton.textContent = 'Đang gửi...';
-      messageDiv.textContent = ''; 
-      messageDiv.className = '';   
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = au-name.value.trim();
+    const author = au-author.value.trim();
+    const desc = au-desc.value.trim();
+    const link = au-link.value.trim();
 
-      const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+    const btn = form.querySelector("button");
+    btn.disabled = true;
+    btn.innerText = "Đang gửi...";
 
-      const data = {
-        name: document.getElementById('name').value.trim(),
-        author: document.getElementById('creator').value.trim(), 
-        desc: document.getElementById('summary').value.trim(),   
-        link: document.getElementById('link').value.trim()
-      };
-
-      try {
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          form.reset();
-          messageDiv.textContent = result.message; 
-          messageDiv.className = 'message-success'; 
-
-          setTimeout(() => {
-            window.location.href = 'aus.html';
-          }, 2000);
-          
-        } else {
-          const errorResult = await response.json();
-          messageDiv.textContent = 'Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.');
-          messageDiv.className = 'message-error';
-          submitButton.disabled = false;
-          submitButton.textContent = 'Gửi AU';
-        }
-
-      } catch (error) {
-        console.error('Lỗi khi gửi fetch:', error);
-        messageDiv.textContent = 'Gửi thất bại: Không thể kết nối máy chủ. Vui lòng thử lại.';
-        messageDiv.className = 'message-error';
-        submitButton.disabled = false;
-        submitButton.textContent = 'Gửi AU';
+    try {
+      const res = await fetch(`${API_BASE}/aus`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, author, desc, link })
+      });
+      if (res.ok) {
+        alert("AU của bạn đã được gửi!");
+        form.reset();
+      } else {
+        alert("Lỗi khi gửi AU.");
       }
-    });
+    } catch (err) {
+      alert("Không thể kết nối đến server.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Gửi AU";
+    }
+  });
   </script>
-  </body>
+</body>
 </html>
