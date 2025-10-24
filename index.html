@@ -8,7 +8,33 @@
 </head>
 <body>
 
-    <header>
+  <div id="splash-screen">
+    <video 
+      id="splash-video"
+      src="intro.mp4" 
+      autoplay 
+      muted 
+      playsinline
+    ></video>
+  </div>
+  <script>
+    // 1. Tìm màn hình chờ và video
+    const splash = document.getElementById('splash-screen');
+    const video = document.getElementById('splash-video');
+
+    // 2. Chạy hàm này khi video KẾT THÚC
+    video.onended = function() {
+      // Thêm lớp CSS 'fade-out' để kích hoạt hiệu ứng mờ
+      splash.classList.add('fade-out');
+    };
+    
+    // 3. (Dự phòng) Nếu video bị lỗi không tải được
+    video.onerror = function() {
+      // Bỏ qua intro và ẩn nó ngay lập tức
+      splash.classList.add('fade-out');
+    };
+  </script>
+  <header>
         <h1>Dusttale</h1>
     </header>
 
