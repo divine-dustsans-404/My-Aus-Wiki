@@ -1,190 +1,204 @@
-/* --- Cài đặt chung cho toàn trang --- */
-body {
-    background-color: #1a1a1a; /* Màu nền tối */
-    color: #e0e0e0;           /* Màu chữ sáng (gần trắng) */
-    font-family: Arial, sans-serif; /* Phông chữ dễ đọc */
-    margin: 0;
-    padding: 0;
+/* ===============================
+   DUST!SANS THEME
+   Author: Divine Dust
+   =============================== */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+  --dust-red: #ff003c;
+  --dust-dark: #0a070d;
+  --dust-purple: #9c27b0;
+  --dust-shadow: rgba(255, 0, 60, 0.3);
+  --dust-text: #f5e6ff;
 }
 
-/* --- 1. Tiêu đề Wiki --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--dust-dark);
+  color: var(--dust-text);
+  font-family: 'VT323', monospace;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
 header {
-    background-color: #0d0d0d; /* Nền đen tuyền cho tiêu đề */
-    padding: 15px;
-    text-align: center;
-    border-bottom: 3px solid #444;
+  background: linear-gradient(180deg, #120818 0%, #0b0810 100%);
+  text-align: center;
+  padding: 20px;
+  border-bottom: 2px solid var(--dust-red);
+  box-shadow: 0 0 20px var(--dust-shadow);
 }
 
 header h1 {
-    color: #ffffff;
-    margin: 0;
-    font-size: 2em; /* 2em = gấp 2 lần cỡ chữ bình thường */
-}
-
-/* --- 2. Thanh điều hướng --- */
-nav {
-    background-color: #333333; /* Nền xám tối cho menu */
-    padding: 10px 0;
+  color: var(--dust-red);
+  text-shadow: 0 0 10px var(--dust-red), 0 0 20px var(--dust-purple);
+  letter-spacing: 2px;
+  font-size: 2.5em;
 }
 
 nav ul {
-    list-style: none; /* Bỏ dấu chấm đầu dòng */
-    padding: 0;
-    margin: 0;
-    text-align: center;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-nav li {
-    display: inline-block; /* Hiển thị các mục menu trên cùng một hàng */
-    margin: 0 20px;
+nav ul li {
+  margin: 10px;
 }
 
-nav a {
-    color: #ffffff; /* Màu chữ trắng */
-    text-decoration: none; /* Bỏ gạch chân */
-    font-weight: bold;
-    font-size: 1.1em;
+nav ul li a {
+  text-decoration: none;
+  color: var(--dust-text);
+  padding: 8px 15px;
+  border: 1px solid var(--dust-purple);
+  border-radius: 6px;
+  transition: 0.2s;
 }
 
-/* Thêm hiệu ứng khi di chuột qua link */
-nav a:hover {
-    color: #ffff00; /* Đổi màu vàng (màu đặc trưng của Undertale) */
+nav ul li a:hover,
+nav ul li a.active {
+  background: var(--dust-red);
+  color: #fff;
+  box-shadow: 0 0 15px var(--dust-red);
 }
 
-/* Thêm class 'active' cho trang hiện tại (MÀU VÀNG) */
-nav a.active {
-    color: #ffff00;
-}
-
-/* --- 3. Khu vực nội dung chính --- */
 main {
-    /* Đặt chiều rộng tối đa và căn giữa nội dung */
-    max-width: 900px;
-    margin: 20px auto; /* 20px lề trên/dưới, auto căn lề trái/phải (căn giữa) */
-    padding: 25px;
-    background-color: #2a2a2a; /* Nền xám đậm hơn cho nội dung */
-    border-radius: 8px; /* Bo góc */
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(20, 10, 25, 0.8);
+  border: 2px solid var(--dust-purple);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(156, 39, 176, 0.3);
+  text-align: center;
 }
 
-article h2, main h2 { /* Áp dụng cho cả trang chủ và các trang con */
-    color: #ffff00; /* Tiêu đề bài viết màu vàng */
-    border-bottom: 2px solid #555;
-    padding-bottom: 5px;
+h2 {
+  color: var(--dust-red);
+  text-shadow: 0 0 5px var(--dust-red);
+  margin-bottom: 10px;
 }
 
-article h3, main h3 {
-    color: #f0f0f0;
+p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
 }
 
-/* Định dạng cho hình ảnh */
-.page-image {
-    max-width: 100%; /* Đảm bảo ảnh không bị tràn ra ngoài */
-    height: auto;
-    display: block; /* Giúp căn giữa ảnh dễ dàng */
-    margin: 15px auto; /* Căn giữa ảnh */
-    border: 3px solid #444;
-    border-radius: 5px;
+.au-card {
+  background: rgba(40, 20, 50, 0.7);
+  border: 1px solid var(--dust-purple);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 0 10px rgba(255, 0, 60, 0.2);
+  transition: transform 0.2s ease;
 }
 
-/* Định dạng các liên kết trong nội dung */
-article a, main a {
-    color: #4a90e2; /* Màu xanh cho liên kết */
-    text-decoration: none;
+.au-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px var(--dust-shadow);
 }
 
-article a:hover, main a:hover {
-    text-decoration: underline; /* Thêm gạch chân khi di chuột */
+.au-card a {
+  color: var(--dust-red);
+  text-decoration: none;
+  font-weight: bold;
 }
 
-/* --- 4. (MỚI) CSS cho Infobox (Trang chủ) --- */
-.infobox {
-    float: right;
-    width: 280px;
-    margin-left: 20px;
-    margin-bottom: 15px;
-    background-color: #000;
-    border: 2px solid #fff;
-    padding: 10px;
-    font-family: 'Courier New', monospace;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+.au-card a:hover {
+  color: #fff;
+  text-shadow: 0 0 6px var(--dust-red);
 }
 
-.infobox h3 {
-    text-align: center;
-    color: #fff;
-    margin: 0 0 5px 0;
-    font-size: 1.2em;
+form {
+  text-align: left;
+  max-width: 600px;
+  margin: auto;
 }
 
-.infobox .subtitle {
-    text-align: center;
-    color: #ccc;
-    font-size: 0.9em;
-    margin: 0 0 15px 0;
-    border-bottom: 1px solid #555;
-    padding-bottom: 10px;
+form label {
+  display: block;
+  margin-top: 15px;
+  color: var(--dust-purple);
+  font-size: 1.2em;
 }
 
-.infobox section {
-    margin-bottom: 10px;
+form input,
+form textarea {
+  width: 100%;
+  background: #1b1320;
+  border: 1px solid #3a1f47;
+  color: var(--dust-text);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 1.1em;
+  transition: border 0.2s ease;
 }
 
-.infobox p {
-    margin: 4px 0;
-    font-size: 0.95em;
-    line-height: 1.4;
+form input:focus,
+form textarea:focus {
+  border-color: var(--dust-red);
+  outline: none;
+  box-shadow: 0 0 10px var(--dust-red);
 }
 
-.infobox p strong {
-    display: inline-block;
-    width: 60px; /* Căn lề cho LV, HP, DF */
+form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--dust-red);
+  color: #fff;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-shadow: 0 0 6px #fff;
 }
 
-.infobox p span {
-    color: #ff004c; /* Màu đỏ */
-    float: right;
-    font-weight: bold;
+form button:hover {
+  background: var(--dust-purple);
+  box-shadow: 0 0 20px var(--dust-shadow);
+  transform: scale(1.05);
 }
 
-/* --- 5. Chân trang --- */
 footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #0d0d0d;
-    color: #777;
-    font-size: 0.9em;
-    border-top: 1px solid #333;
-    clear: both; /* Đảm bảo footer luôn ở dưới cùng (quan trọng vì .infobox dùng float) */
+  margin-top: 40px;
+  text-align: center;
+  padding: 15px;
+  font-size: 1em;
+  color: #bbb;
+  border-top: 1px solid var(--dust-purple);
 }
 
-/* --- 6. (MỚI) Splash Screen BẰNG VIDEO --- */
-
-#splash-screen {
-  position: fixed; /* Che toàn bộ màn hình */
+/* Background video */
+#intro-bg {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #0d0d0d; /* Nền đen */
-  z-index: 9999; /* Luôn trên cùng */
-  
-  /* Cài đặt cho hiệu ứng mờ đi (thêm bằng JavaScript) */
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-}
-
-/* Lớp CSS này sẽ được thêm bằng JS để kích hoạt mờ dần */
-#splash-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-#splash-video {
-  /* Làm cho video che phủ toàn bộ màn hình */
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cắt video để lấp đầy, không làm méo */
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.15;
+  filter: blur(3px) brightness(0.6);
+}
+
+/* Glow Animation */
+@keyframes flicker {
+  0% { text-shadow: 0 0 3px var(--dust-red), 0 0 6px var(--dust-purple); }
+  50% { text-shadow: 0 0 8px var(--dust-red), 0 0 20px var(--dust-purple); }
+  100% { text-shadow: 0 0 3px var(--dust-red), 0 0 6px var(--dust-purple); }
+}
+
+h1, h2 {
+  animation: flicker 3s infinite alternate;
 }
