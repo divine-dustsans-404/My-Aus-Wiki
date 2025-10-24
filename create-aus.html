@@ -1,70 +1,209 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undertale Fan game / Dusttale</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo AU | My AUS Wiki</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Để giữ nguyên giao diện form màu hồng/tím độc đáo của bạn, 
+       chúng ta có thể giữ lại các quy tắc CSS chỉ dành cho form ở đây.
+       Nhưng các quy tắc chung (body, header...) đã bị xóa để dùng style.css
+    */
+    main h2 {
+      color: #ff004c;
+      text-shadow: 0 0 10px #ff004c;
+    }
+
+    form label {
+      color: #ff3366;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      background: #1b1520;
+      border: 1px solid #331a3a;
+      color: #f0e6ff;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 15px;
+      font-size: 1em;
+      box-shadow: inset 0 0 10px rgba(111, 0, 111, 0.3);
+      box-sizing: border-box; /* Thêm để padding không làm vỡ layout */
+    }
+
+    form textarea {
+      resize: vertical;
+      height: 150px;
+    }
+
+    button {
+      background: #b30059;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+      text-shadow: 0 0 4px #fff;
+    }
+
+    button:hover {
+      background: #ff004c;
+      box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
+      transform: scale(1.05);
+    }
+    
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .note {
+      text-align: center;
+      color: #b36eff;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+    
+    /* --- CSS CHO THÔNG BÁO MỚI --- */
+    #form-message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .message-success {
+      color: #b36eff; /* Màu tím (Theo ý bạn!) */
+    }
+    .message-error {
+      color: #ff004c; /* Màu đỏ/hồng (giống tiêu đề) */
+    }
+    /* --- KẾT THÚC CSS MỚI --- */
+
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Dusttale</h1>
-    </header>
+  <header>
+      <h1>Dusttale</h1>
+  </header>
 
-    <nav>
-        <ul>
-            <li><a href="index.html" class="active">Trang chủ</a></li>
-            <li><a href="aus.html">Danh sách AU</a></li>
-            <li><a href="create-aus.html">Tạo AU</a></li>
-            <li><a href="characters.html">Nhân vật</a></li>
-            <li><a href="contribute.html">Đóng góp</a></li>
-        </ul>
-    </nav>
+  <nav>
+      <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="aus.html">Danh sách AU</a></li>
+          <li><a href="create-aus.html" class="active">Tạo AU</a></li>
+          <li><a href="characters.html">Nhân vật</a></li>
+          <li><a href="contribute.html">Đóng góp</a></li>
+      </ul>
+  </nav>
 
-    <aside class="infobox duststats">
-      <h3>"DUST!SANS"</h3>
-      <p class="subtitle">The one who erased mercy itself.</p>
+  <main>
+    <h2>Tạo AU Mới</h2>
 
-      <section>
-        <p><strong>LV</strong> 999 <span>(InF)</span></p>
-        <p><strong>HP</strong> ∞ / ∞ <span>(Fueled by Determination)</span></p>
-        <p><strong>DF</strong> ∞ <span>(Made of Regret)</span></p>
-      </section>
+    <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
 
-      <section>
-        <p><strong>EXP</strong> 999,999</p>
-        <p><strong>NEXT</strong> 0</p>
-        <p><strong>SOUL</strong> Violet-Red <span>(Madness & Determination)</span></p>
-      </section>
+    <form id="create-au">
+      <label for="name">Tên AU</label>
+      <input type="text" id="name" placeholder="Nhập tên AU của bạn" required>
 
-      <section>
-        <p><strong>STATUS</strong> Haunted by the voices of those who should’ve been left alive.</p>
-        <p><strong>WEAPON</strong> Bone Blades / Gaster Blasters</p>
-        <p><strong>ARMOR</strong> Dusty Hoodie</p>
-      </section>
-    </aside>
+      <label for="creator">Tác giả</label>
+      <input type="text" id="creator" placeholder="Tên người tạo AU" required>
 
-    <main>
-        <article>
-            <h2>Chào mừng đến với Wiki!</h2>
-            
-            <p>Đây là trang chủ của wiki dành cho các Vũ trụ Thay thế (AU) của Undertale. Hãy khám phá các sáng tạo của cộng đồng!</p>
+      <label for="summary">Mô tả ngắn</label>
+      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
 
-            <h3>My AU: Dusttale</h3>
+      <label for="link">Liên kết (nếu có)</label>
+      <input type="url" id="link" placeholder="Ví dụ: https://...">
 
-            <img src="26659.jpg" alt="Bản phác thảo Dust Sans" class="page-image">
+      <button type="submit" id="submit-button">Gửi AU</button>
+      
+      <div id="form-message"></div>
+      
+    </form>
+  </main>
 
-            <p><strong>Dusttale</strong> (còn được gọi là Murder!Sans) là một AU của Undertale, nơi việc người chơi lặp lại các tuyến Genocide khiến Sans tuyệt vọng. Để có đủ sức mạnh ngăn chặn con người, Sans bắt đầu một cơn cuồng sát, giết toàn bộ quái vật trong Underground, kể cả em trai Papyrus. Hành động này khiến hắn phát điên và bị ám ảnh bởi ảo giác Papyrus, kẻ luôn thúc giục hắn tiếp tục.</p>
+  <footer>
+      <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
+      <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
+  </footer>
 
-            <p>Đọc thêm tại <a href="#">Dusttale</a>.</p>
-        </article>
-    </main>
+  <script>
+    // --- BẮT ĐẦU JAVASCRIPT NÂNG CẤP ---
+    const form = document.getElementById('create-au');
+    const submitButton = document.getElementById('submit-button');
+    const messageDiv = document.getElementById('form-message'); // Lấy thẻ div thông báo
 
-    <footer>
-        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
-        <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
-    </footer>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); 
+      submitButton.disabled = true;
+      submitButton.textContent = 'Đang gửi...';
+      messageDiv.textContent = ''; // Xóa thông báo cũ
+      messageDiv.className = '';   // Xóa màu cũ
 
-</body>
+      const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
+
+      // 2. Lấy dữ liệu từ form (và dùng .trim() để xóa dấu cách thừa)
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        author: document.getElementById('creator').value.trim(), 
+        desc: document.getElementById('summary').value.trim(),   
+        link: document.getElementById('link').value.trim()
+      };
+
+      // 3. Gửi yêu cầu bằng fetch()
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          // --- THÀNH CÔNG ---
+          const result = await response.json();
+          form.reset();
+          messageDiv.textContent = result.message; // "Đã lưu AU thành công!"
+          messageDiv.className = 'message-success'; // Dùng màu tím
+
+          // Chờ 2 giây rồi mới chuyển trang
+          setTimeout(() => {
+            window.location.href = 'aus.html';
+          }, 2000); // 2000 mili-giây = 2 giây
+          
+          // Không bật lại nút Gửi
+
+        } else {
+          // --- LỖI TỪ MÁY CHỦ (Vd: 400, 500) ---
+          const errorResult = await response.json();
+          messageDiv.textContent = 'Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.');
+          messageDiv.className = 'message-error';
+          // Bật lại nút nếu có lỗi
+          submitButton.disabled = false;
+          submitButton.textContent = 'Gửi AU';
+        }
+
+      } catch (error) {
+        // --- LỖI MẠNG (Vd: Mất mạng, Render sập) ---
+        console.error('Lỗi khi gửi fetch:', error);
+        messageDiv.textContent = 'Gửi thất bại: Không thể kết nối máy chủ. Vui lòng thử lại.';
+        messageDiv.className = 'message-error';
+        // Bật lại nút nếu có lỗi
+        submitButton.disabled = false;
+        submitButton.textContent = 'Gửi AU';
+      }
+    });
+    // --- KẾT THÚC JAVASCRIPT NÂNG CẤP ---
+  </script>
+  </body>
 </html>
