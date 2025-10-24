@@ -5,86 +5,205 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tạo AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Để giữ nguyên giao diện form màu hồng/tím độc đáo của bạn, 
+       chúng ta có thể giữ lại các quy tắc CSS chỉ dành cho form ở đây.
+       Nhưng các quy tắc chung (body, header...) đã bị xóa để dùng style.css
+    */
+    main h2 {
+      color: #ff004c;
+      text-shadow: 0 0 10px #ff004c;
+    }
+
+    form label {
+      color: #ff3366;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      background: #1b1520;
+      border: 1px solid #331a3a;
+      color: #f0e6ff;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 15px;
+      font-size: 1em;
+      box-shadow: inset 0 0 10px rgba(111, 0, 111, 0.3);
+      box-sizing: border-box; /* Thêm để padding không làm vỡ layout */
+    }
+
+    form textarea {
+      resize: vertical;
+      height: 150px;
+    }
+
+    button {
+      background: #b30059;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+      text-shadow: 0 0 4px #fff;
+    }
+
+    button:hover {
+      background: #ff004c;
+      box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
+      transform: scale(1.05);
+    }
+    
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .note {
+      text-align: center;
+      color: #b36eff;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+    
+    /* --- CSS CHO THÔNG BÁO MỚI --- */
+    #form-message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .message-success {
+      color: #b36eff; /* Màu tím (Theo ý bạn!) */
+    }
+    .message-error {
+      color: #ff004c; /* Màu đỏ/hồng (giống tiêu đề) */
+    }
+    /* --- KẾT THÚC CSS MỚI --- */
+
+  </style>
 </head>
 <body>
+
   <header>
-    <h1>Tạo AU Mới</h1>
+      <h1>Dusttale</h1>
   </header>
 
+  <nav>
+      <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="aus.html">Danh sách AU</a></li>
+          <li><a href="create-aus.html" class="active">Tạo AU</a></li>
+          <li><a href="characters.html">Nhân vật</a></li>
+          <li><a href="contribute.html">Đóng góp</a></li>
+      </ul>
+  </nav>
+
   <main>
+    <h2>Tạo AU Mới</h2>
+
     <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
 
-    <form id="create-au-form">
-      <label for="au-name">Tên AU</label>
-      <input type="text" id="au-name" placeholder="Nhập tên AU của bạn" required>
+    <form id="create-au">
+      <label for="name">Tên AU</label>
+      <input type="text" id="name" placeholder="Nhập tên AU của bạn" required>
 
-      <label for="au-author">Tác giả</label>
-      <input type="text" id="au-author" placeholder="Tên người tạo AU" required>
+      <label for="creator">Tác giả</label>
+      <input type="text" id="creator" placeholder="Tên người tạo AU" required>
 
-      <label for="au-desc">Mô tả ngắn</label>
-      <textarea id="au-desc" placeholder="Viết mô tả ngắn về AU..." required></textarea>
+      <label for="summary">Mô tả ngắn</label>
+      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
 
-      <label for="au-link">Liên kết (nếu có)</label>
-      <input type="url" id="au-link" placeholder="Ví dụ: https://...">
+      <label for="link">Liên kết (nếu có)</label>
+      <input type="url" id="link" placeholder="Ví dụ: https://...">
 
-      <button type="submit">Gửi AU</button>
+      <button type="submit" id="submit-button">Gửi AU</button>
+      
+      <div id="form-message"></div>
+      
     </form>
   </main>
 
   <footer>
-    <p>&copy; 2025 My AUS Wiki | Undertale thuộc Toby Fox.</p>
+      <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
+      <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
   </footer>
 
- <script>
-const API_BASE = "https://dust-aus-backend.onrender.com";
-const form = document.getElementById("create-au-form");
-const note = document.querySelector(".note");
+  <script>
+    // --- BẮT ĐẦU JAVASCRIPT NÂNG CẤP ---
+    const form = document.getElementById('create-au');
+    const submitButton = document.getElementById('submit-button');
+    const messageDiv = document.getElementById('form-message'); // Lấy thẻ div thông báo
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); 
+      submitButton.disabled = true;
+      submitButton.textContent = 'Đang gửi...';
+      messageDiv.textContent = ''; // Xóa thông báo cũ
+      messageDiv.className = '';   // Xóa màu cũ
 
-  const name = au-name.value.trim();
-  const author = au-author.value.trim();
-  const desc = au-desc.value.trim();
-  const link = au-link.value.trim();
+      const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
 
-  if (!name || !author || !desc) {
-    note.innerHTML = "<span style='color:#ff003c;'>Thiếu dữ liệu! Hãy điền đủ Tên, Tác giả và Mô tả.</span>";
-    return;
-  }
+      // 2. Lấy dữ liệu từ form (và dùng .trim() để xóa dấu cách thừa)
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        author: document.getElementById('creator').value.trim(), 
+        desc: document.getElementById('summary').value.trim(),   
+        link: document.getElementById('link').value.trim()
+      };
 
-  const btn = form.querySelector("button");
-  btn.disabled = true;
-  btn.innerText = "Đang gửi...";
-  btn.style.background = "#9c27b0";
+      // 3. Gửi yêu cầu bằng fetch()
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-  try {
-    const res = await fetch(`${API_BASE}/aus`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, author, desc, link })
+        if (response.ok) {
+          // --- THÀNH CÔNG ---
+          const result = await response.json();
+          form.reset();
+          messageDiv.textContent = result.message; // "Đã lưu AU thành công!"
+          messageDiv.className = 'message-success'; // Dùng màu tím
+
+          // Chờ 2 giây rồi mới chuyển trang
+          setTimeout(() => {
+            window.location.href = 'aus.html';
+          }, 2000); // 2000 mili-giây = 2 giây
+          
+          // Không bật lại nút Gửi
+
+        } else {
+          // --- LỖI TỪ MÁY CHỦ (Vd: 400, 500) ---
+          const errorResult = await response.json();
+          messageDiv.textContent = 'Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.');
+          messageDiv.className = 'message-error';
+          // Bật lại nút nếu có lỗi
+          submitButton.disabled = false;
+          submitButton.textContent = 'Gửi AU';
+        }
+
+      } catch (error) {
+        // --- LỖI MẠNG (Vd: Mất mạng, Render sập) ---
+        console.error('Lỗi khi gửi fetch:', error);
+        messageDiv.textContent = 'Gửi thất bại: Không thể kết nối máy chủ. Vui lòng thử lại.';
+        messageDiv.className = 'message-error';
+        // Bật lại nút nếu có lỗi
+        submitButton.disabled = false;
+        submitButton.textContent = 'Gửi AU';
+      }
     });
-
-    if (!res.ok) throw new Error("Server không phản hồi hợp lệ");
-
-    // Hiệu ứng “glow” khi gửi thành công
-    btn.innerText = "✔ Đã gửi!";
-    btn.style.background = "#ff003c";
-    btn.style.boxShadow = "0 0 25px #ff003c";
-    note.innerHTML = "<span style='color:#9c27b0;'>AU của bạn đã được gửi lên thành công!</span>";
-    form.reset();
-
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.innerText = "Gửi AU";
-      btn.style.boxShadow = "";
-    }, 3000);
-  } catch (err) {
-    note.innerHTML = "<span style='color:#ff003c;'>Không thể kết nối đến server. Kiểm tra lại Render hoặc mạng của bạn.</span>";
-    btn.disabled = false;
-    btn.innerText = "Gửi AU";
-  }
-});
-</script>
-</body>
+    // --- KẾT THÚC JAVASCRIPT NÂNG CẤP ---
+  </script>
+  </body>
 </html>
