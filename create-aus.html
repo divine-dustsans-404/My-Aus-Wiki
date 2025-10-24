@@ -35,40 +35,56 @@
     <p>&copy; 2025 My AUS Wiki | Undertale thuộc Toby Fox.</p>
   </footer>
 
-  <script>
-  const API_BASE = "https://dust-aus-backend.onrender.com";
-  const form = document.getElementById("create-au-form");
+ <script>
+const API_BASE = "https://dust-aus-backend.onrender.com";
+const form = document.getElementById("create-au-form");
+const note = document.querySelector(".note");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = au-name.value.trim();
-    const author = au-author.value.trim();
-    const desc = au-desc.value.trim();
-    const link = au-link.value.trim();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const btn = form.querySelector("button");
-    btn.disabled = true;
-    btn.innerText = "Đang gửi...";
+  const name = au-name.value.trim();
+  const author = au-author.value.trim();
+  const desc = au-desc.value.trim();
+  const link = au-link.value.trim();
 
-    try {
-      const res = await fetch(`${API_BASE}/aus`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, author, desc, link })
-      });
-      if (res.ok) {
-        alert("AU của bạn đã được gửi!");
-        form.reset();
-      } else {
-        alert("Lỗi khi gửi AU.");
-      }
-    } catch (err) {
-      alert("Không thể kết nối đến server.");
-    } finally {
+  if (!name || !author || !desc) {
+    note.innerHTML = "<span style='color:#ff003c;'>Thiếu dữ liệu! Hãy điền đủ Tên, Tác giả và Mô tả.</span>";
+    return;
+  }
+
+  const btn = form.querySelector("button");
+  btn.disabled = true;
+  btn.innerText = "Đang gửi...";
+  btn.style.background = "#9c27b0";
+
+  try {
+    const res = await fetch(`${API_BASE}/aus`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, author, desc, link })
+    });
+
+    if (!res.ok) throw new Error("Server không phản hồi hợp lệ");
+
+    // Hiệu ứng “glow” khi gửi thành công
+    btn.innerText = "✔ Đã gửi!";
+    btn.style.background = "#ff003c";
+    btn.style.boxShadow = "0 0 25px #ff003c";
+    note.innerHTML = "<span style='color:#9c27b0;'>AU của bạn đã được gửi lên thành công!</span>";
+    form.reset();
+
+    setTimeout(() => {
       btn.disabled = false;
       btn.innerText = "Gửi AU";
-    }
-  });
-  </script>
+      btn.style.boxShadow = "";
+    }, 3000);
+  } catch (err) {
+    note.innerHTML = "<span style='color:#ff003c;'>Không thể kết nối đến server. Kiểm tra lại Render hoặc mạng của bạn.</span>";
+    btn.disabled = false;
+    btn.innerText = "Gửi AU";
+  }
+});
+</script>
 </body>
 </html>
