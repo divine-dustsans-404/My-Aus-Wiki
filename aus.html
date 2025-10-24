@@ -5,233 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
-  
-  <style>
-    /* ... (Toàn bộ CSS nội bộ cho .au-item và .delete-btn của bạn) ... */
-    .au-item {
-      background-color: #1a1a1a;
-      border: 1px solid #444;
-      padding: 10px 15px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      overflow: hidden; 
-    }
-    .au-item h3 {
-      color: #ffff00; 
-      margin-top: 0;
-      border-bottom: 1px dashed #555;
-      padding-bottom: 5px;
-      margin-right: 60px; 
-    }
-    .au-item strong {
-      color: #ccc;
-    }
-    .delete-btn {
-      background-color: #7d0000; 
-      color: #ffcccc;
-      border: 1px solid #ff0000;
-      padding: 3px 8px;
-      font-size: 0.8em;
-      border-radius: 4px;
-      cursor: pointer;
-      float: right; 
-    }
-    .delete-btn:hover {
-      background-color: #ff0000;
-      color: #fff;
-    }
-  </style>
 </head>
 <body>
-
-  <div id="splash-screen">
-    <video 
-      id="splash-video"
-      src="intro.mp4" 
-      autoplay 
-      muted 
-      playsinline
-    ></video>
-  </div>
-  <script>
-    // 1. Tìm màn hình chờ và video
-    const splash = document.getElementById('splash-screen');
-    const video = document.getElementById('splash-video');
-
-    // 2. Kiểm tra xem intro đã được phát trong phiên này chưa
-    if (sessionStorage.getItem('introPlayed') === 'true') {
-      // Nếu ĐÃ PHÁT RỒI: Ẩn ngay lập tức
-      splash.classList.add('fade-out');
-    } else {
-      // Nếu CHƯA PHÁT: Cài đặt sự kiện cho nó
-      
-      // 3. Chạy hàm này khi video KẾT THÚC
-      video.onended = function() {
-        // Ẩn màn hình chờ
-        splash.classList.add('fade-out');
-        // Đánh dấu là "đã phát" vào trí nhớ tạm
-        sessionStorage.setItem('introPlayed', 'true');
-      };
-      
-      // 4. (Dự phòng) Nếu video bị lỗi không tải được
-      video.onerror = function() {
-        // Bỏ qua intro và ẩn nó ngay lập tức
-        splash.classList.add('fade-out');
-        // Vẫn đánh dấu là "đã phát" để không thử lại
-        sessionStorage.setItem('introPlayed', 'true');
-      };
-    }
-  </script>
   <header>
-        <h1>Dusttale</h1>
-    </header>
-
+    <h1>Danh sách AU</h1>
     <nav>
-        <ul>
-            <li><a href="index.html">Trang chủ</a></li>
-            <li><a href="aus.html" class="active">Danh sách AU</a></li>
-            <li><a href="create-aus.html">Tạo AU</a></li>
-            <li><a href="characters.html">Nhân vật</a></li>
-            <li><a href="contribute.html">Đóng góp</a></li>
-        </ul>
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="aus.html" class="active">Danh sách AU</a></li>
+        <li><a href="characters.html">Nhân vật</a></li>
+        <li><a href="create-aus.html">Tạo AU</a></li>
+        <li><a href="contribute.html">Đóng góp</a></li>
+      </ul>
     </nav>
+  </header>
 
-    <main id="au-list-container">
-      
-        <h2>Danh sách AU</h2>
-        <p>Đang tải danh sách từ máy chủ...</p>
+  <main>
+    <section id="au-list"></section>
+  </main>
 
-    </main>
+  <footer>
+    <p>&copy; 2025 My AUS Wiki</p>
+  </footer>
 
-    <footer>
-        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
-        <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
-    </footer>
-
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        loadAUs();
-        setupDeleteListener(); 
-      });
-
-      // HÀM TẢI DỮ LIỆU
-      async function loadAUs() {
-        // ... (Toàn bộ code loadAUs của bạn giữ nguyên) ...
-        const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
-        const main = document.getElementById('au-list-container');
-        
-        try {
-          const response = await fetch(BACKEND_URL);
-          if (!response.ok) throw new Error('Lỗi máy chủ: ' + response.status);
-          
-          const aus = await response.json();
-          main.innerHTML = ''; 
-          
-          const title = document.createElement('h2');
-          title.textContent = 'Danh sách AU';
-          main.appendChild(title);
-
-          if (aus.length === 0) {
-            main.innerHTML += '<p>Hiện tại chưa có AU nào được gửi lên. Hãy là người đầu tiên đóng góp!</p>';
-            main.innerHTML += '<p><a href="create-aus.html">Nhấn vào đây để tạo AU mới</a>.</p>';
-          } else {
-            
-            aus.forEach(au => {
-              const article = document.createElement('article');
-              article.className = 'au-item';
-
-              const deleteButton = document.createElement('button');
-              deleteButton.textContent = 'Xóa';
-              deleteButton.className = 'delete-btn';
-              deleteButton.dataset.id = au._id; 
-              article.appendChild(deleteButton);
-
-              const h3 = document.createElement('h3');
-              h3.textContent = au.name;
-              article.appendChild(h3);
-              
-              const pAuthor = document.createElement('p');
-              pAuthor.innerHTML = '<strong>Tác giả:</strong> ';
-              pAuthor.appendChild(document.createTextNode(au.author || 'Không rõ'));
-              article.appendChild(pAuthor);
-
-              const pDesc = document.createElement('p');
-              pDesc.textContent = au.desc;
-              article.appendChild(pDesc);
-
-              if (au.link && au.link.trim() !== '') {
-                const pLink = document.createElement('p');
-                const a = document.createElement('a');
-                a.href = au.link;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                a.textContent = 'Xem thêm liên kết';
-                pLink.appendChild(a);
-                article.appendChild(pLink);
-              }
-              
-              main.appendChild(article);
-            });
-          }
-        } catch (error) {
-          console.error('Không thể tải AUs:', error);
-          main.innerHTML = '<h2>Đã xảy ra lỗi</h2>';
-          main.innerHTML += '<p>Không thể tải danh sách AU từ máy chủ. Vui lòng thử lại sau.</p>';
-          main.innerHTML += `<p><i>Chi tiết lỗi: ${error.message}</i></p>`;
-        }
-      } 
-
-      // HÀM XỬ LÝ XÓA
-      function setupDeleteListener() {
-        // ... (Toàn bộ code setupDeleteListener của bạn giữ nguyên) ...
-        const main = document.getElementById('au-list-container');
-        main.addEventListener('click', (e) => {
-          if (e.target.classList.contains('delete-btn')) {
-            handleDelete(e.target);
-          }
-        });
-      }
-
-      async function handleDelete(button) {
-        // ... (Toàn bộ code handleDelete của bạn giữ nguyên) ...
-        const auId = button.dataset.id; 
-        const auName = button.closest('.au-item').querySelector('h3').textContent;
-
-        const token = prompt(`Bạn có chắc muốn xóa "${auName}"?\n\nNhập Mật khẩu Admin để xác nhận:`);
-
-        if (!token) {
-          return; 
-        }
-
-        const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
-        button.textContent = 'Đang xóa...';
-        button.disabled = true;
-
-        try {
-          const response = await fetch(`${BACKEND_URL}/${auId}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': token 
-            }
-          });
-
-          if (response.ok) {
-            button.closest('.au-item').remove();
-            alert(`Đã xóa "${auName}" thành công!`);
-          } else {
-            const error = await response.json();
-            alert(`Xóa thất bại: ${error.message}`);
-            button.textContent = 'Xóa';
-            button.disabled = false;
-          }
-
-        } catch (err) {
-          console.error('Lỗi khi xóa:', err);
-          alert('Lỗi kết nối khi đang cố xóa.');
-          button.textContent = 'Xóa';
-          button.disabled = false;
-        }
-      }
-    </script>
+  <script>
+  const API_BASE = "https://dust-aus-backend.onrender.com";
+  async function loadAUs() {
+    try {
+      const res = await fetch(`${API_BASE}/aus`);
+      const data = await res.json();
+      const list = document.getElementById("au-list");
+      list.innerHTML = data.map(au => `
+        <div class="au-card">
+          <h3>${au.name}</h3>
+          <p><strong>Tác giả:</strong> ${au.author}</p>
+          <p>${au.desc}</p>
+          ${au.link ? `<a href="${au.link}" target="_blank">Xem thêm</a>` : ""}
+        </div>
+      `).join("");
+    } catch (err) {
+      document.getElementById("au-list").innerHTML = "<p>Lỗi tải dữ liệu.</p>";
+    }
+  }
+  loadAUs();
+  </script>
 </body>
 </html>
