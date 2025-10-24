@@ -126,17 +126,17 @@
       submitButton.disabled = true;
       submitButton.textContent = 'Đang gửi...';
 
-      // --- ĐÂY LÀ THAY ĐỔI QUAN TRỌNG ---
-      // 1. Địa chỉ Backend (Trỏ đến máy chủ Render)
       const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
 
-      // 2. Lấy dữ liệu từ form
+      // --- BẮT ĐẦU THAY ĐỔI ---
+      // 2. Lấy dữ liệu từ form (và dùng .trim() để xóa dấu cách thừa)
       const data = {
-        name: document.getElementById('name').value,
-        author: document.getElementById('creator').value, 
-        desc: document.getElementById('summary').value,   
-        link: document.getElementById('link').value
+        name: document.getElementById('name').value.trim(),
+        author: document.getElementById('creator').value.trim(), 
+        desc: document.getElementById('summary').value.trim(),   
+        link: document.getElementById('link').value.trim()
       };
+      // --- KẾT THÚC THAY ĐỔI ---
 
       // 3. Gửi yêu cầu bằng fetch()
       try {
