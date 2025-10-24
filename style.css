@@ -88,7 +88,7 @@ article h3, main h3 {
 
 /* Định dạng các liên kết trong nội dung */
 article a, main a {
-    color: #4a90e2; /* Màu xanh cho liên kết (Giữ nguyên hoặc có thể đổi sang tím/đỏ nếu muốn) */
+    color: #b30059; /* ĐÃ SỬA: Đổi sang màu Tím/Hồng đậm */
     text-decoration: none;
 }
 
@@ -193,3 +193,4 @@ footer {
         margin: 0 10px;
     }
 }
+
