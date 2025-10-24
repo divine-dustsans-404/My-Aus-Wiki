@@ -103,8 +103,8 @@
                   <p><strong>Tác giả:</strong> ${au.author}</p>
                   <p>${au.desc}</p>
                   
-                  ${au.link ? `<p><a href="${au.link}" target="_blank" rel="noopener noreferrer">Xem thêm liên kết</a></p>` : ''}
-                </article>
+                  ${(au.link && au.link.trim() !== '') ? `<p><a href="${au.link}" target="_blank" rel="noopener noreferrer">Xem thêm liên kết</a></p>` : ''}
+                  </article>
               `;
               
               // 10. Chèn khối HTML vừa tạo vào cuối thẻ <main>
