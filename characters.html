@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* CSS nội bộ chỉ dành cho trang này */
+        /* ... (Toàn bộ CSS nội bộ của bạn cho trang này) ... */
         .character-grid {
             display: grid;
-            /* Tạo 2 cột có độ rộng bằng nhau */
             grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; /* Khoảng cách giữa các card */
+            gap: 20px; 
         }
-
         .character-card {
             background-color: #1a1a1a;
             border: 1px solid #444;
@@ -22,22 +20,18 @@
             padding: 15px;
             text-align: center;
         }
-
         .character-card img {
             width: 100%;
-            max-width: 250px; /* Giới hạn kích thước ảnh */
+            max-width: 250px; 
             height: auto;
             border-radius: 5px;
             border: 2px solid #555;
             margin-bottom: 10px;
         }
-
         .character-card h3 {
-            color: #ff004c; /* Màu đỏ/hồng */
+            color: #ff004c; 
             margin-top: 0;
         }
-
-        /* Khi màn hình nhỏ (như điện thoại), chỉ hiển thị 1 cột */
         @media (max-width: 600px) {
             .character-grid {
                 grid-template-columns: 1fr;
@@ -61,17 +55,29 @@
     const splash = document.getElementById('splash-screen');
     const video = document.getElementById('splash-video');
 
-    // 2. Chạy hàm này khi video KẾT THÚC
-    video.onended = function() {
-      // Thêm lớp CSS 'fade-out' để kích hoạt hiệu ứng mờ
+    // 2. Kiểm tra xem intro đã được phát trong phiên này chưa
+    if (sessionStorage.getItem('introPlayed') === 'true') {
+      // Nếu ĐÃ PHÁT RỒI: Ẩn ngay lập tức
       splash.classList.add('fade-out');
-    };
-    
-    // 3. (Dự phòng) Nếu video bị lỗi không tải được
-    video.onerror = function() {
-      // Bỏ qua intro và ẩn nó ngay lập tức
-      splash.classList.add('fade-out');
-    };
+    } else {
+      // Nếu CHƯA PHÁT: Cài đặt sự kiện cho nó
+      
+      // 3. Chạy hàm này khi video KẾT THÚC
+      video.onended = function() {
+        // Ẩn màn hình chờ
+        splash.classList.add('fade-out');
+        // Đánh dấu là "đã phát" vào trí nhớ tạm
+        sessionStorage.setItem('introPlayed', 'true');
+      };
+      
+      // 4. (Dự phòng) Nếu video bị lỗi không tải được
+      video.onerror = function() {
+        // Bỏ qua intro và ẩn nó ngay lập tức
+        splash.classList.add('fade-out');
+        // Vẫn đánh dấu là "đã phát" để không thử lại
+        sessionStorage.setItem('introPlayed', 'true');
+      };
+    }
   </script>
   <header>
         <h1>Dusttale</h1>
