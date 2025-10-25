@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tạo AU | My AUS Wiki</title>
+  <title>Create AU | My AUS Wiki</title>
   <link rel="stylesheet" href="style.css">
   
   <style>
-    /* Để giữ nguyên giao diện form màu hồng/tím độc đáo của bạn, 
-       chúng ta có thể giữ lại các quy tắc CSS chỉ dành cho form ở đây.
-       Nhưng các quy tắc chung (body, header...) đã bị xóa để dùng style.css
-    */
+    /* Retaining your unique pink/purple form styling */
     main h2 {
       color: #ff004c;
       text-shadow: 0 0 10px #ff004c;
@@ -33,7 +30,7 @@
       margin-bottom: 15px;
       font-size: 1em;
       box-shadow: inset 0 0 10px rgba(111, 0, 111, 0.3);
-      box-sizing: border-box; /* Thêm để padding không làm vỡ layout */
+      box-sizing: border-box; 
     }
 
     form textarea {
@@ -73,7 +70,7 @@
       margin-bottom: 15px;
     }
     
-    /* --- CSS CHO THÔNG BÁO MỚI --- */
+    /* --- NEW MESSAGE CSS --- */
     #form-message {
       text-align: center;
       margin-top: 15px;
@@ -81,12 +78,12 @@
       font-weight: bold;
     }
     .message-success {
-      color: #b36eff; /* Màu tím (Theo ý bạn!) */
+      color: #b36eff; /* Purple color (As per your request!) */
     }
     .message-error {
-      color: #ff004c; /* Màu đỏ/hồng (giống tiêu đề) */
+      color: #ff004c; /* Red/Pink color (like the title) */
     }
-    /* --- KẾT THÚC CSS MỚI --- */
+    /* --- END OF NEW CSS --- */
 
   </style>
 </head>
@@ -98,33 +95,33 @@
 
   <nav>
       <ul>
-          <li><a href="index.html">Trang chủ</a></li>
-          <li><a href="aus.html">Danh sách AU</a></li>
-          <li><a href="create-aus.html" class="active">Tạo AU</a></li>
-          <li><a href="characters.html">Nhân vật</a></li>
-          <li><a href="contribute.html">Đóng góp</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aus.html">AU List</a></li>
+          <li><a href="create-aus.html" class="active">Create AU</a></li>
+          <li><a href="characters.html">Characters</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
       </ul>
   </nav>
 
   <main>
-    <h2>Tạo AU Mới</h2>
+    <h2>Create New AU</h2>
 
-    <p class="note">Chia sẻ AU của bạn để cộng đồng biết đến!</p>
+    <p class="note">Share your AU so the community can know about it!</p>
 
     <form id="create-au">
-      <label for="name">Tên AU</label>
-      <input type="text" id="name" placeholder="Nhập tên AU của bạn" required>
+      <label for="name">AU Name</label>
+      <input type="text" id="name" placeholder="Enter the name of your AU" required>
 
-      <label for="creator">Tác giả</label>
-      <input type="text" id="creator" placeholder="Tên người tạo AU" required>
+      <label for="creator">Creator</label>
+      <input type="text" id="creator" placeholder="Name of the AU creator" required>
 
-      <label for="summary">Mô tả ngắn</label>
-      <textarea id="summary" placeholder="Viết mô tả ngắn về AU..." required></textarea>
+      <label for="summary">Short Description</label>
+      <textarea id="summary" placeholder="Write a brief description of the AU..." required></textarea>
 
-      <label for="link">Liên kết (nếu có)</label>
-      <input type="url" id="link" placeholder="Ví dụ: https://...">
+      <label for="link">Link (if any)</label>
+      <input type="url" id="link" placeholder="Example: https://...">
 
-      <button type="submit" id="submit-button">Gửi AU</button>
+      <button type="submit" id="submit-button">Submit AU</button>
       
       <div id="form-message"></div>
       
@@ -132,26 +129,26 @@
   </main>
 
   <footer>
-      <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
-      <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
+      <p>&copy; 2025 Dust!Sans [Elliot Davidson]. All rights reserved.</p>
+      <p>Website developed based on the Undertale fan community. Undertale belongs to Toby Fox. The Dusttale AU belongs to its creator.</p>
   </footer>
 
   <script>
-    // --- BẮT ĐẦU JAVASCRIPT NÂNG CẤP ---
+    // --- START OF UPGRADED JAVASCRIPT ---
     const form = document.getElementById('create-au');
     const submitButton = document.getElementById('submit-button');
-    const messageDiv = document.getElementById('form-message'); // Lấy thẻ div thông báo
+    const messageDiv = document.getElementById('form-message'); 
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault(); 
       submitButton.disabled = true;
-      submitButton.textContent = 'Đang gửi...';
-      messageDiv.textContent = ''; // Xóa thông báo cũ
-      messageDiv.className = '';   // Xóa màu cũ
+      submitButton.textContent = 'Sending...';
+      messageDiv.textContent = ''; 
+      messageDiv.className = '';   
 
       const BACKEND_URL = 'https://dust-aus-backend.onrender.com/aus';
 
-      // 2. Lấy dữ liệu từ form (và dùng .trim() để xóa dấu cách thừa)
+      // 2. Get data from the form (using .trim() to remove extra spaces)
       const data = {
         name: document.getElementById('name').value.trim(),
         author: document.getElementById('creator').value.trim(), 
@@ -159,7 +156,7 @@
         link: document.getElementById('link').value.trim()
       };
 
-      // 3. Gửi yêu cầu bằng fetch()
+      // 3. Send the request using fetch()
       try {
         const response = await fetch(BACKEND_URL, {
           method: 'POST',
@@ -170,40 +167,40 @@
         });
 
         if (response.ok) {
-          // --- THÀNH CÔNG ---
+          // --- SUCCESS ---
           const result = await response.json();
           form.reset();
-          messageDiv.textContent = result.message; // "Đã lưu AU thành công!"
-          messageDiv.className = 'message-success'; // Dùng màu tím
+          messageDiv.textContent = result.message; // Assumes backend sends a success message like "AU saved successfully!"
+          messageDiv.className = 'message-success'; 
 
-          // Chờ 2 giây rồi mới chuyển trang
+          // Wait 2 seconds before redirecting
           setTimeout(() => {
             window.location.href = 'aus.html';
-          }, 2000); // 2000 mili-giây = 2 giây
+          }, 2000); // 2000 milliseconds = 2 seconds
           
-          // Không bật lại nút Gửi
+          // Do not re-enable the Submit button
 
         } else {
-          // --- LỖI TỪ MÁY CHỦ (Vd: 400, 500) ---
+          // --- SERVER ERROR (e.g., 400, 500) ---
           const errorResult = await response.json();
-          messageDiv.textContent = 'Lỗi: ' + (errorResult.message || 'Máy chủ báo lỗi không xác định.');
+          messageDiv.textContent = 'Error: ' + (errorResult.message || 'Unknown server error.');
           messageDiv.className = 'message-error';
-          // Bật lại nút nếu có lỗi
+          // Re-enable the button if there is an error
           submitButton.disabled = false;
-          submitButton.textContent = 'Gửi AU';
+          submitButton.textContent = 'Submit AU';
         }
 
       } catch (error) {
-        // --- LỖI MẠNG (Vd: Mất mạng, Render sập) ---
-        console.error('Lỗi khi gửi fetch:', error);
-        messageDiv.textContent = 'Gửi thất bại: Không thể kết nối máy chủ. Vui lòng thử lại.';
+        // --- NETWORK ERROR (e.g., connection lost) ---
+        console.error('Fetch error:', error);
+        messageDiv.textContent = 'Submission failed: Could not connect to the server. Please try again.';
         messageDiv.className = 'message-error';
-        // Bật lại nút nếu có lỗi
+        // Re-enable the button if there is an error
         submitButton.disabled = false;
-        submitButton.textContent = 'Gửi AU';
+        submitButton.textContent = 'Submit AU';
       }
     });
-    // --- KẾT THÚC JAVASCRIPT NÂNG CẤP ---
+    // --- END OF UPGRADED JAVASCRIPT ---
   </script>
   </body>
 </html>
