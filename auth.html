@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register | My AUS Wiki</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* CSS nội bộ để tùy chỉnh trang auth.html */
+
+        /* Căn giữa form vào chính giữa màn hình */
+        body {
+            display: flex;
+            flex-direction: column; /* Xếp chồng main và footer */
+            min-height: 100vh; /* Chiếm tối thiểu 100% chiều cao viewport */
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            flex-grow: 1; /* Cho phép phần nội dung chính mở rộng để đẩy footer xuống */
+            display: flex;
+            align-items: center; /* Căn giữa form theo chiều dọc */
+            justify-content: center; /* Căn giữa form theo chiều ngang */
+            padding: 20px;
+        }
+
+        /* Hộp chứa form */
+        .auth-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #1a1a1a; /* Màu nền tối từ style.css (hoặc màu bạn muốn) */
+            border: 2px solid #555;
+            border-radius: 10px;
+            /* Thêm box-shadow nếu bạn dùng style.css mới */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            color: #ff3366; /* Màu hồng */
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            /* Cập nhật nếu dùng style.css mới */
+            color: #E6244C; 
+            border-bottom: 2px solid #7A287E;
+        }
+        
+        /* CSS cho các trường input và label */
+        .auth-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ff3366; /* Màu hồng */
+            /* Cập nhật nếu dùng style.css mới */
+            color: #F0F0F0;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #1e1e1e; /* Nền tối cho input */
+            border: 1px solid #444;
+            color: #f0e6ff; /* Màu chữ input */
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* Cập nhật nếu dùng style.css mới */
+            background: #444C5C;
+            border: 1px solid #7A287E;
+            color: #F0F0F0;
+        }
+
+        /* Nút Đăng nhập/Đăng ký */
+        .auth-form button {
+            width: 100%;
+            background: #b30059; /* Màu tím/hồng */
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: 0.2s;
+            /* Cập nhật nếu dùng style.css mới */
+            background: #7A287E;
+        }
+
+        .auth-form button:hover {
+            background: #ff004c; /* Màu hồng sáng khi hover */
+            box-shadow: 0 0 15px rgba(255, 0, 120, 0.5);
+            /* Cập nhật nếu dùng style.css mới */
+            background: #E6244C;
+            box-shadow: 0 0 15px rgba(230, 36, 76, 0.9);
+        }
+
+        /* Liên kết chuyển đổi (toggle) */
+        .toggle-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .toggle-link a {
+            color: #b36eff; /* Màu tím */
+            cursor: pointer;
+            text-decoration: underline;
+            /* Cập nhật nếu dùng style.css mới */
+            color: #E6244C;
+        }
+
+        /* ẨN FORM ĐĂNG KÝ BAN ĐẦU */
+        #register-form {
+            display: none; 
+        }
+        
+        /* Thông báo Lỗi/Thành công */
+        #auth-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .success {
+            color: #b36eff;
+            background: #251a3a;
+        }
+        .error {
+            color: #ff004c;
+            background: #3a1a1a;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+      <div class="auth-container">
+        
+        <form id="login-form" class="auth-form">
+          <h2>Login to Wiki</h2>
+          
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" required>
+          
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+          
+          <button type="submit">Login</button>
+          
+          <div class="toggle-link">
+            Don't have an account? <a href="#" onclick="toggleForm('register')">Register here</a>.
+          </div>
+        </form>
+
+        <form id="register-form" class="auth-form">
+          <h2>Register for Wiki</h2>
+          
+          <label for="reg-username">Username</label>
+          <input type="text" id="reg-username" required>
+
+          <label for="reg-email">Email (Optional)</label>
+          <input type="email" id="reg-email">
+          
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" required>
+          
+          <button type="submit">Register</button>
+          
+          <div class="toggle-link">
+            Already have an account? <a href="#" onclick="toggleForm('login')">Login here</a>.
+          </div>
+        </form>
+        
+        <div id="auth-message"></div>
+
+      </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. All rights reserved.</p>
+        <p>Website developed based on the Undertale fan community. Undertale belongs to Toby Fox. The Dusttale AU belongs to its creator.</p>
+    </footer>
+    
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const messageDiv = document.getElementById('auth-message');
+        
+        // --- 1. HÀM CHUYỂN ĐỔI FORM (ĐĂNG NHẬP <-> ĐĂNG KÝ) ---
+        function toggleForm(mode) {
+            messageDiv.textContent = ''; // Xóa thông báo cũ
+            messageDiv.className = '';
+            if (mode === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else { // mode === 'register'
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+        }
+        
+        // HÀM HIỂN THỊ THÔNG BÁO
+        function displayMessage(text, isSuccess) {
+            messageDiv.textContent = text;
+            messageDiv.className = isSuccess ? 'success' : 'error';
+        }
+
+        // --- 2. XỬ LÝ ĐĂNG NHẬP (Mô phỏng) ---
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            // (Chúng ta không cần mật khẩu cho ví dụ mô phỏng này)
+            
+            // THAY THẾ BẰNG URL MÁY CHỦ THỰC CỦA BẠN (NẾU CÓ)
+            // const LOGIN_URL = 'https://your-backend-api.com/auth/login'; 
+
+            displayMessage('Logging in...', true);
+
+            try {
+                // Mô phỏng độ trễ của máy chủ (1.5 giây)
+                await new Promise(resolve => setTimeout(resolve, 1500)); 
+                
+                // === BƯỚC QUAN TRỌNG NHẤT ===
+                // Lưu tên người dùng vào LocalStorage
+                localStorage.setItem('currentUser', username); 
+                
+                displayMessage(`Welcome back, ${username}! Redirecting...`, true);
+                
+                // Chuyển hướng về trang chủ sau 2 giây
+                setTimeout(() => {
+                    window.location.href = 'index.html'; 
+                }, 2000); 
+
+            } catch (error) {
+                // Nếu thất bại (Lỗi kết nối hoặc máy chủ trả về lỗi)
+                displayMessage('Login failed. Please check your credentials.', false);
+            }
+        });
+
+        // --- 3. XỬ LÝ ĐĂNG KÝ (Mô phỏng) ---
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+
+            // THAY THẾ BẰNG URL MÁY CHỦ THỰC CỦA BẠN (NẾU CÓ)
+            // const REGISTER_URL = 'https://your-backend-api.com/auth/register'; 
+
+            displayMessage('Registering...', true);
+
+            try {
+                // Mô phỏng độ trễ của máy chủ (1.5 giây)
+                await new Promise(resolve => setTimeout(resolve, 1500)); 
+
+                // Nếu thành công
+                displayMessage(`Registration successful! Welcome, ${username}. You can now login.`, true);
+                
+                // Chuyển sang form Đăng nhập sau 3 giây
+                setTimeout(() => {
+                    toggleForm('login'); 
+                }, 3000); 
+
+            } catch (error) {
+                // Nếu thất bại
+                displayMessage('Registration failed. Username may already be taken.', false);
+            }
+        });
+
+        // Đặt hàm này ở phạm vi toàn cục (window) để HTML (onclick) có thể gọi
+        window.toggleForm = toggleForm; 
+    </script>
+</body>
+</html>
