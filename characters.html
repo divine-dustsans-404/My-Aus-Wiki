@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nhân vật | My AUS Wiki</title>
+    <title>Characters | My AUS Wiki</title>
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* CSS nội bộ chỉ dành cho trang này */
+        /* Internal CSS specific to this page */
         .character-grid {
             display: grid;
-            /* Tạo 2 cột có độ rộng bằng nhau */
+            /* Create 2 columns of equal width */
             grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; /* Khoảng cách giữa các card */
+            gap: 20px; /* Space between cards */
         }
 
         .character-card {
@@ -25,7 +25,7 @@
 
         .character-card img {
             width: 100%;
-            max-width: 250px; /* Giới hạn kích thước ảnh */
+            max-width: 250px; /* Limit image size */
             height: auto;
             border-radius: 5px;
             border: 2px solid #555;
@@ -33,11 +33,11 @@
         }
 
         .character-card h3 {
-            color: #ff004c; /* Màu đỏ/hồng */
+            color: #ff004c; /* Red/Pink color */
             margin-top: 0;
         }
 
-        /* Khi màn hình nhỏ (như điện thoại), chỉ hiển thị 1 cột */
+        /* Show only 1 column on small screens (like phones) */
         @media (max-width: 600px) {
             .character-grid {
                 grid-template-columns: 1fr;
@@ -53,29 +53,29 @@
 
     <nav>
         <ul>
-            <li><a href="index.html">Trang chủ</a></li>
-            <li><a href="aus.html">Danh sách AU</a></li>
-            <li><a href="create-aus.html">Tạo AU</a></li>
-            <li><a href="characters.html" class="active">Nhân vật</a></li>
-            <li><a href="contribute.html">Đóng góp</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aus.html">AU List</a></li>
+            <li><a href="create-aus.html">Create AU</a></li>
+            <li><a href="characters.html" class="active">Characters</a></li>
+            <li><a href="contribute.html">Contribute</a></li>
         </ul>
     </nav>
 
     <main>
       
-        <h2>Các Nhân vật Chính</h2>
-        <p>Các nhân vật xuất hiện trong AU Dusttale.</p>
+        <h2>Main Characters</h2>
+        <p>Characters appearing in the Dusttale AU.</p>
 
         <div class="character-grid">
 
             <article class="character-card">
                 <h3>Dust!Sans (Murder!Sans)</h3>
-                <p>Nhân vật chính. Bị ám ảnh bởi việc ngăn chặn con người, hắn đã tự tay giết tất cả quái vật để thu thập LV.</p>
+                <p>The main character. Obsessed with stopping the human, he manually killed all the monsters to gather LV.</p>
             </article>
 
             <article class="character-card">
                 <h3>Phantom Papyrus</h3>
-                <p>Một ảo ảnh của Papyrus chỉ mình Sans thấy được. Hắn là hiện thân cho sự hối hận và điên loạn của Sans, thường khuyến khích Sans tiếp tục giết chóc.</p>
+                <p>A phantom of Papyrus that only Sans can see. He is the embodiment of Sans's regret and madness, often encouraging Sans to continue the killing.</p>
             </article>
 
         </div>
@@ -83,8 +83,8 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. Đã đăng ký bản quyền.</p>
-        <p>Website được phát triển dựa trên cộng đồng fan Undertale. Undertale thuộc về Toby Fox. Dusttale AU thuộc về người tạo ra nó.</p>
+        <p>&copy; 2025 Dust!Sans [Elliot Davidson]. All rights reserved.</p>
+        <p>Website developed based on the Undertale fan community. Undertale belongs to Toby Fox. The Dusttale AU belongs to its creator.</p>
     </footer>
 
 </body>
