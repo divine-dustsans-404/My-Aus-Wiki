@@ -53,5 +53,53 @@
         <p>Website developed based on the Undertale fan community. Undertale belongs to Toby Fox. The Dusttale AU belongs to its creator.</p>
     </footer>
 
+    <script>
+        // --- 1. MÔ PHỎNG ĐĂNG NHẬP/ĐĂNG XUẤT (Sử dụng LocalStorage) ---
+        function getCurrentUser() {
+            return localStorage.getItem('currentUser');
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            window.location.reload(); 
+        }
+
+        // --- 2. HÀM CẬP NHẬT THANH ĐIỀU HƯỚNG ---
+        function updateNavBar() {
+            const user = getCurrentUser(); 
+            const navUl = document.querySelector('nav ul');
+            
+            // Xóa mọi mục cũ liên quan đến Auth/User (nếu có)
+            const authItems = navUl.querySelectorAll('.auth-item');
+            authItems.forEach(item => item.remove());
+
+            if (user) {
+                // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP 
+                
+                // 1. Mục Tên người dùng
+                const userItem = document.createElement('li');
+                userItem.className = 'auth-item'; 
+                userItem.innerHTML = `<span style="color:#b36eff; font-weight:bold; padding: 10px 15px;">${user}</span>`;
+                navUl.appendChild(userItem);
+
+                // 2. Mục Đăng xuất
+                const logoutItem = document.createElement('li');
+                logoutItem.className = 'auth-item';
+                logoutItem.innerHTML = `<li><a href="#" onclick="logoutUser()">Logout</a></li>`; 
+                navUl.appendChild(logoutItem);
+            
+            } else {
+                // TRẠNG THÁI: CHƯA ĐĂNG NHẬP 
+                const loginItem = document.createElement('li');
+                loginItem.className = 'auth-item';
+                loginItem.innerHTML = `<li><a href="auth.html">Login / Register</a></li>`;
+                navUl.appendChild(loginItem);
+            }
+        }
+        
+        // --- 3. KHỞI CHẠY ---
+        window.logoutUser = logoutUser; 
+        document.addEventListener('DOMContentLoaded', updateNavBar);
+    </script>
 </body>
 </html>
