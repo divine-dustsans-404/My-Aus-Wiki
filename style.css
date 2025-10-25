@@ -1,128 +1,137 @@
+/*=====================================
+  BẢNG MÀU DUST!SANS: Quyết Tâm Tím
+  - Đỏ Quyết Tâm: #E6244C (Thay thế #ff004c)
+  - Tím Đôi Mắt: #7A287E (Thay thế #b30059)
+  - Xám Tro (Nền): #444C5C (Thay thế #1a1a1a và #2a2a2a)
+  - Trắng Linh Hồn: #F0F0F0 (Thay thế #e0e0e0)
+=====================================*/
+
 /* --- Cài đặt chung cho toàn trang --- */
 body {
-    background-color: #1a1a1a; /* Màu nền tối */
-    color: #e0e0e0;           /* Màu chữ sáng (gần trắng) */
-    font-family: Arial, sans-serif; /* Phông chữ dễ đọc */
+    background-color: #444C5C;      /* SỬA: Màu nền Xám Tro đậm */
+    color: #F0F0F0;                 /* SỬA: Màu chữ Trắng Linh Hồn */
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 /* --- 1. Tiêu đề Wiki --- */
 header {
-    background-color: #0d0d0d; /* Nền đen tuyền cho tiêu đề */
+    background-color: #2C3A47;      /* Màu nền tối hơn Xám Tro */
     padding: 15px;
     text-align: center;
-    border-bottom: 3px solid #444;
+    border-bottom: 3px solid #7A287E; /* SỬA: Dùng màu Tím Đôi Mắt */
 }
 
 header h1 {
-    color: #ffffff;
+    color: #E6244C;                 /* SỬA: Đỏ Quyết Tâm */
     margin: 0;
-    font-size: 2em; /* 2em = gấp 2 lần cỡ chữ bình thường */
+    font-size: 2em;
 }
 
 /* --- 2. Thanh điều hướng --- */
 nav {
-    background-color: #333333; /* Nền xám tối cho menu */
+    background-color: #7A287E;      /* SỬA: Nền Tím Đôi Mắt cho menu */
     padding: 10px 0;
 }
 
 nav ul {
-    list-style: none; /* Bỏ dấu chấm đầu dòng */
+    list-style: none;
     padding: 0;
     margin: 0;
     text-align: center;
 }
 
 nav li {
-    display: inline-block; /* Hiển thị các mục menu trên cùng một hàng */
+    display: inline-block;
     margin: 0 20px;
 }
 
 nav a {
-    color: #ffffff; /* Màu chữ trắng */
-    text-decoration: none; /* Bỏ gạch chân */
+    color: #F0F0F0;                 /* Chữ Trắng */
+    text-decoration: none;
     font-weight: bold;
     font-size: 1.1em;
 }
 
 /* Thêm hiệu ứng khi di chuột qua link */
 nav a:hover {
-    color: #ff004c; /* ĐÃ SỬA: Đổi màu vàng sang Đỏ/Hồng */
+    color: #E6244C;                 /* SỬA: Đỏ Quyết Tâm khi hover */
 }
 
-/* Thêm class 'active' cho trang hiện tại (MÀU ĐỎ/HỒNG) */
+/* Thêm class 'active' cho trang hiện tại */
 nav a.active {
-    color: #ff004c; /* ĐÃ SỬA: Đổi màu vàng sang Đỏ/Hồng */
+    color: #E6244C;                 /* SỬA: Đỏ Quyết Tâm cho link active */
 }
 
 /* --- 3. Khu vực nội dung chính --- */
 main {
-    /* Đặt chiều rộng tối đa và căn giữa nội dung */
     max-width: 900px;
-    margin: 20px auto; /* 20px lề trên/dưới, auto căn lề trái/phải (căn giữa) */
+    margin: 20px auto;
     padding: 25px;
-    background-color: #2a2a2a; /* Nền xám đậm hơn cho nội dung */
-    border-radius: 8px; /* Bo góc */
+    background-color: #2C3A47;      /* SỬA: Nền tối hơn cho nội dung (Tím mờ) */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Thêm bóng nhẹ */
 }
 
-article h2, main h2 { /* Áp dụng cho cả trang chủ và các trang con */
-    color: #ff004c; /* ĐÃ SỬA: Tiêu đề bài viết màu Đỏ/Hồng */
-    border-bottom: 2px solid #555;
+article h2, main h2 {
+    color: #E6244C;                 /* SỬA: Tiêu đề bài viết màu Đỏ Quyết Tâm */
+    border-bottom: 2px solid #7A287E; /* SỬA: Gạch chân Tím Đôi Mắt */
     padding-bottom: 5px;
 }
 
 article h3, main h3 {
-    color: #f0f0f0;
+    color: #F0F0F0;
 }
 
 /* Định dạng cho hình ảnh */
 .page-image {
-    max-width: 100%; /* Đảm bảo ảnh không bị tràn ra ngoài */
+    max-width: 100%;
     height: auto;
-    display: block; /* Giúp căn giữa ảnh dễ dàng */
-    margin: 15px auto; /* Căn giữa ảnh */
-    border: 3px solid #444;
+    display: block;
+    margin: 15px auto;
+    border: 3px solid #7A287E;      /* SỬA: Viền ảnh Tím Đôi Mắt */
     border-radius: 5px;
 }
 
 /* Định dạng các liên kết trong nội dung */
 article a, main a {
-    color: #b30059; /* ĐÃ SỬA: Đổi sang màu Tím/Hồng đậm */
+    color: #E6244C;                 /* SỬA: Màu link Đỏ Quyết Tâm */
     text-decoration: none;
 }
 
 article a:hover, main a:hover {
-    text-decoration: underline; /* Thêm gạch chân khi di chuột */
+    text-decoration: underline;
+    color: #F0F0F0;                 /* Trắng Linh Hồn khi hover */
 }
 
-/* --- 4. (MỚI) CSS cho Infobox (Trang chủ) --- */
+/* --- 4. CSS cho Infobox (Trang chủ) --- */
 .infobox {
     float: right;
     width: 280px;
     margin-left: 20px;
     margin-bottom: 15px;
-    background-color: #000;
-    border: 2px solid #b30059; /* ĐÃ SỬA: Viền màu Tím/Hồng đậm */
+    background-color: #574B90;      /* SỬA: Nền Tím đậm hơn (Tím Thẫm) */
+    border: 2px solid #E6244C;      /* SỬA: Viền màu Đỏ Quyết Tâm */
     padding: 10px;
     font-family: 'Courier New', monospace;
-    color: #f0e6ff; /* ĐÃ SỬA: Màu chữ trắng tím */
-    box-shadow: 0 0 10px rgba(179, 0, 89, 0.8); /* ĐÃ SỬA: Box Shadow màu Tím/Hồng đậm */
+    color: #F0F0F0;                 /* SỬA: Màu chữ Trắng Linh Hồn */
+    box-shadow: 0 0 15px rgba(230, 36, 76, 0.9); /* SỬA: Box Shadow màu Đỏ Quyết Tâm */
 }
 
 .infobox h3 {
     text-align: center;
-    color: #ff004c; /* ĐÃ SỬA: Tiêu đề Infobox màu Đỏ/Hồng */
+    color: #7A287E;                 /* SỬA: Tiêu đề Infobox màu Tím Đôi Mắt */
     margin: 0 0 5px 0;
     font-size: 1.2em;
 }
 
 .infobox .subtitle {
     text-align: center;
-    color: #ccc;
+    color: #F0F0F0;
     font-size: 0.9em;
     margin: 0 0 15px 0;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #E6244C; /* SỬA: Gạch chân Đỏ Quyết Tâm */
     padding-bottom: 10px;
 }
 
@@ -138,59 +147,53 @@ article a:hover, main a:hover {
 
 .infobox p strong {
     display: inline-block;
-    width: 60px; /* Căn lề cho LV, HP, DF */
+    width: 60px;
+    color: #E6244C;                 /* SỬA: LV/HP/DF màu Đỏ Quyết Tâm */
 }
 
 .infobox p span {
-    color: #ff004c; /* Màu đỏ (Giữ nguyên) */
+    color: #F0F0F0;
     float: right;
     font-weight: bold;
 }
+.infobox p span.status-info { /* Đặt một class nếu muốn phân biệt status và số liệu */
+    color: #E6244C; /* Đỏ Quyết Tâm cho các giá trị đặc biệt */
+}
+
 
 /* --- 5. Chân trang --- */
 footer {
     text-align: center;
     padding: 20px;
     margin-top: 20px;
-    background-color: #0d0d0d;
-    color: #777;
+    background-color: #2C3A47;
+    color: #A4B0BE; /* Xám ấm cho chữ footer */
     font-size: 0.9em;
-    border-top: 1px solid #333;
-    clear: both; /* Đảm bảo footer luôn ở dưới cùng (quan trọng vì .infobox dùng float) */
+    border-top: 1px solid #7A287E;  /* SỬA: Gạch chân Tím Đôi Mắt */
+    clear: both;
 }
 
 /* --- 6. Tối ưu hóa cho điện thoại (Responsive Design) --- */
 
-/* Điều chỉnh lại khu vực nội dung chính trên màn hình nhỏ */
 @media (max-width: 768px) {
-    /* Màn hình nhỏ hơn 768px (thường là máy tính bảng/điện thoại) */
-    
-    /* Bỏ float Infobox để nó không làm tràn trang */
     .infobox {
         float: none;
-        width: 100%; /* Chiếm toàn bộ chiều rộng có sẵn */
+        width: 100%;
         margin-left: 0;
     }
     
-    /* Cập nhật lề cho main khi không có infobox nổi */
     main {
         padding: 15px;
-        margin: 10px; /* Lề nhỏ hơn */
+        margin: 10px;
     }
     
-    /* KHẮC PHỤC HÌNH ẢNH: Đảm bảo hình ảnh không quá lớn */
     .page-image {
-        /* Đã có max-width: 100% */
-        /* Giới hạn chiều rộng tối đa tuyệt đối để ảnh không quá to */
         max-width: 400px; 
-        /* Giới hạn chiều cao tối đa tuyệt đối (ví dụ: 60vh = 60% chiều cao màn hình) */
         max-height: 60vh;
-        width: auto; /* Cho phép nó co giãn theo max-height nếu cần */
+        width: auto;
     }
     
-    /* Giảm kích thước font cho thanh điều hướng */
     nav li {
         margin: 0 10px;
     }
 }
-
